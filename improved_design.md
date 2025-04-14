@@ -1,1115 +1,1497 @@
-Let me methodically analyze and plan an improved landing page for The Scent, considering the full prompt, your company mission, and the need for a "Wow Effect" while maintaining UX and accessibility.
+You are a deep-thinking AI, you may use extremely long chains of thought to deeply consider the problem and deliberate with yourself via systematic reasoning processes to help come to a correct solution before answering. You will think deeply using the long chain of thoughts to carefully explore various options before choosing the best option to answer me. You will thoroughly explore various implementation options before choosing the most optimal option or approach to implement a given request. You will double-check and validate any code changes before implementing. You should enclose your thoughts and internal monologue inside <think> </think> tags, and then provide your solution or response to the problem.
 
-**Step 1: Analyze the prompt requirements and opportunities.**
+Now carefully review the sample HTML code below for my website landing page, then think deeply and thoroughly to explore the various options to create an improved landing page for my company (description below) before choosing the best option to create a landing page that not only suits my business but also gives the "Wow Effect" (awesome looking and unique).  
+Create an enhanced version of the landing page for *The Scent* that takes things several notches higher. Consider adding immersive elements such as a full‑screen hero with video and fallback image, subtle animated “scent trails” using an SVG path with keyframe animation, parallax effects in the About section, an interactive multi‑step quiz concept, scroll-triggered fade‑ins for testimonials, and a floating “Shop Now” button with a pulsing hover effect. A dark/light mode toggle lets visitors explore a color‑shifted world that still feels serene and aromatic. This design leverages Font Awesome throughout to tie all the components together with the right iconography.
 
-- **Required elements (from user prompt):**
-  - Full‑screen hero with video and fallback image
-  - Subtle animated “scent trails” using SVG path with keyframe animation
-  - Parallax effect in the About section
-  - Interactive multi‑step quiz concept
-  - Scroll-triggered fade‑ins for testimonials
-  - Floating “Shop Now” button with pulsing hover effect
-  - Dark/light mode toggle, with color-shifting but peaceful themes
-  - Font Awesome iconography, cohesively applied
+```  
+# Company mission and business  
+*The Scent* Story
+- promote mental & physical health
+- products include various smell of essential oils to choose from and custom natural premium soap
+- Our company produces a whole range of aroma therapeutic products where high quality raw materials from all over the world are imported and our finished products are exported back to these countries.  This is possible due to our unique and creative product formulations and our knowledge for the various applications, to create harmonious, balanced and well rounded aromatherapy products.  Stress is an ever-increasing part of our lives, and this can only mean that aromatherapy is more relevant today than ever before.
+```  
+# company products to showcase:  
+https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/scent2.jpg  
+https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/scent4.jpg  
+https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/scent5.jpg  
+https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/scent6.jpg  
+https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/soap2.jpg  
+https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/soap4.jpg  
+https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/soap5.jpg  
+https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/soap6.jpg  
 
-- **Product/brand principles:**
-  - Promote mental & physical health via global-quality aroma products and premium soap
-  - International origin of ingredients, artisanal formulation, modern wellness
-  - Tension: science-backed & natural, premium but warm/approachable
 
-- **Advanced enhancement ideas from above:**
-  - Ambient audio toggle (gentle, optional)
-  - Ingredient map (global story)
-  - Animated mists/trails overlay
-  - Parallax on ingredient images
-  - Micro-interactions
-  - Sticky/floating CTAs
-  - Immersive storytelling (brand narrative moments)
-  - Scroll-triggered animations
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Scent | Experience Pure Aroma</title>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    /* Global Resets and Base Styles */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Arial', sans-serif; line-height: 1.6; transition: background 0.3s, color 0.3s; }
+    a { text-decoration: none; }
 
-**Step 2: Decide a page structure that guides user immersion & discovery.**
-- Navigation (sticky, with dark/light toggle)
-- Hero: fullscreen video, animated mist/scent trail SVG overlay, welcome copy, pulsing CTA, ambient audio toggle
-- About: parallax background or ingredients with scrolling effect, weaving in ingredient origin visuals
-- Products: animated cards with immersive hover, global markers/icons, possibly grouped in slider/sections for feature variation
-- Interactive quiz: inline, multi-step, reveals scent match using smooth transitions and relevant images/cards
-- Testimonials: portrait+story+rating, scroll-triggered fading
-- “Our Ingredients” world map - hover/clickable points reveal ingredient/dialog
-- Newsletter signup
-- Footer: social, contact, payment icons
+    /* Dark Mode */
+    body.dark { background: #222; color: #ddd; }
+    body.dark nav { background: #333; }
+    body.dark .section-dark { background: #333; color: #ddd; }
+    body.dark .btn { background: #555; }
+    body.dark footer { background: #111; color: #bbb; }
 
-**Step 3: Explore implementation choices.**
+    /* Navigation */
+    nav {
+      width: 100%;
+      position: fixed;
+      top: 0;
+      z-index: 1000;
+      background: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 30px;
+    }
+    nav .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+    nav a {
+      color: #555;
+      font-size: 1em;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: color 0.3s;
+    }
+    nav a:hover { color: #007acc; }
+    nav .dark-toggle { cursor: pointer; }
 
-**Video/Mist Hero**:
-- Video background (object-fit: cover).
-- <svg> animated paths/mists for scent effect; use `stroke-dasharray` + keyframes, subtle opacity, possibly two-layered
-- “Ambient audio” toggle (gentle, accessible, not auto-played)
-- CTA: floating “Shop Now” with pulsing animation, always visible bottom-right
+    /* Hero Section with Video Background and Scent Trail Animation */
+    header.hero {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+      color: #fff;
+      text-align: center;
+    }
+    header.hero video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      z-index: -2;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+    }
+    header.hero::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: -1;
+    }
+    header.hero .hero-content {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 0 20px;
+    }
+    header.hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+    }
+    header.hero p {
+      font-size: 1.5rem;
+      margin-bottom: 30px;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+    }
+    .btn {
+      background: #007acc;
+      color: #fff;
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-size: 1rem;
+      display: inline-block;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .btn:hover {
+      background: #005fa3;
+      transform: scale(1.05);
+    }
 
-**Dark/Light Toggle:**
-- Switch variables for colors (add dark variables for backgrounds/text/CTA/accent).
-- Animate the toggle, use icon swap (moon/sun)
-- Ensure mists and images don't lose contrast in both themes
+    /* Animated Scent Trail */
+    .scent-trail {
+      position: absolute;
+      pointer-events: none;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+    .scent-trail svg { width: 100%; height: 100%; }
+    .trail-path {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.3);
+      stroke-width: 2;
+      stroke-dasharray: 200;
+      stroke-dashoffset: 200;
+      animation: trail 10s linear infinite;
+    }
+    @keyframes trail {
+      0% { stroke-dashoffset: 200; }
+      100% { stroke-dashoffset: 0; }
+    }
 
-**Quiz:**
-- Multi-step, not just select→submit (each step advances, shows progress)
-- Visually engaging with icons and positive feedback, animated progression
-- Final result: show matching product(s) (cards, image, CTA)
+    /* Section Titles and Base Section Styles */
+    section { padding: 80px 20px; }
+    .section-title {
+      text-align: center;
+      font-size: 2.75rem;
+      margin-bottom: 40px;
+      color: #007acc;
+    }
+    
+    /* Parallax Effect in the About Section */
+    .parallax {
+      background-attachment: fixed;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      z-index: 1;
+    }
+    .parallax::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.3);
+      z-index: 1;
+    }
+    .parallax .parallax-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: #fff;
+    }
+    
+    /* About Section */
+    .about {
+      background-image: url('https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/scent4.jpg');
+    }
+    .about .content {
+      max-width: 800px;
+      margin: auto;
+      padding: 60px 20px;
+      text-align: center;
+      font-size: 1.1rem;
+    }
 
-**About/Parallax:**
-- Use pure CSS or light JS for parallax on one key image or div
-- Option: Parallax local ingredient visuals overlay brand story
+    /* Interactive Scent Quiz */
+    .quiz {
+      background: #f9f9f9;
+      border-radius: 10px;
+      max-width: 800px;
+      margin: auto;
+      padding: 30px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    .quiz h2 {
+      margin-bottom: 20px;
+      font-size: 2rem;
+      color: #007acc;
+    }
+    .quiz .quiz-step {
+      margin: 20px 0;
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+    }
+    .quiz .quiz-step:nth-child(1) { animation-delay: 0.3s; }
+    .quiz .quiz-step:nth-child(2) { animation-delay: 0.6s; }
+    .quiz .quiz-step:nth-child(3) { animation-delay: 0.9s; }
+    .quiz .quiz-step label { display: block; margin-bottom: 10px; font-weight: bold; }
+    .quiz .quiz-step select, .quiz .quiz-step input {
+      padding: 10px;
+      width: 80%;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
 
-**Testimonials:**
-- Each card has slight entrance animation on scroll (can use IntersectionObserver or a library like AOS if needed, but pure JS possible)
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-**Ingredient Map:**
-- SVG or image map, with animated pulse at ingredient origin points
-- On hover/focus: show dialog/modal or tooltip with story and image
+    /* Products Section */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
+    }
+    .product {
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .product img {
+      width: 100%;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .product:hover img {
+      transform: scale(1.1);
+    }
+    .product-info {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      background: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+    .product:hover .product-info { opacity: 1; }
 
-**Shop Now CTA:**
-- Fixed position, round button, soft pulsing effect (CSS animation)
-- Icon inside, on hover scales or adds colored shadow
+    /* Testimonials Section with Fade In */
+    .testimonials {
+      background: #f4f4f4;
+      padding: 60px 20px;
+    }
+    .testimonial-item {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      text-align: center;
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+    }
+    .testimonial-item:nth-child(1) { animation-delay: 0.3s; }
+    .testimonial-item:nth-child(2) { animation-delay: 0.6s; }
+    .testimonial-item:nth-child(3) { animation-delay: 0.9s; }
+    .testimonial-item p { font-style: italic; margin-bottom: 10px; }
+    .testimonial-item .author { font-weight: bold; color: #007acc; }
 
-**Font Awesome:**
-- Use for navigation links, quiz icons, map points, testimonials, etc.
+    /* Global Ingredients Section */
+    .global-ingredients {
+      background: url('https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/scent5.jpg') center/cover no-repeat;
+      position: relative;
+      color: #fff;
+      padding: 80px 20px;
+      text-align: center;
+    }
+    .global-ingredients::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+    }
+    .global-ingredients .content {
+      position: relative;
+      z-index: 2;
+    }
+    .global-ingredients .map-icons {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 20px;
+    }
+    .global-ingredients .map-icons div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 1.5rem;
+    }
 
-**Accessibility:**
-- ARIA labels, semantic elements, alt text, color contrast checks
+    /* Newsletter Section */
+    .newsletter {
+      background: #007acc;
+      color: #fff;
+      text-align: center;
+      padding: 40px 20px;
+      border-radius: 10px;
+      max-width: 600px;
+      margin: auto;
+    }
+    .newsletter input[type="email"] {
+      padding: 10px;
+      width: 60%;
+      border: none;
+      border-radius: 5px;
+      margin: 10px 0;
+    }
+    .newsletter .btn {
+      background: #fff;
+      color: #007acc;
+      margin-top: 10px;
+    }
 
-**Step 4: Validate all code changes.**
-- Check accessibility of custom elements (e.g., toggles, fixed CTAs).
-- Ensure animations are gentle (avoid distracting, can be reduced on prefers-reduced-motion).
-- Test contrast for dark/light modes.
+    /* Footer */
+    footer {
+      background: #333;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+    footer .socials {
+      margin: 10px 0;
+    }
+    footer .socials a {
+      color: #fff;
+      margin: 0 10px;
+      font-size: 1.2rem;
+      transition: transform 0.3s;
+    }
+    footer .socials a:hover { transform: scale(1.2); }
 
-**Step 5: Prepare code—in a single HTML file for easy deployment/test.**
-- Inline CSS for clarity, but clearly sectioned.
-- Minimal JS, clean separation where possible.
-- All image/video/CDN/Font Awesome links direct and reliable.
+    /* Floating Shop Now Button */
+    .shop-now {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #ff7f50;
+      color: #fff;
+      padding: 15px 20px;
+      border-radius: 50px;
+      font-size: 1rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      transition: transform 0.3s, background 0.3s;
+      z-index: 1001;
+    }
+    .shop-now:hover {
+      transform: scale(1.1);
+      background: #ff6347;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-logo">
+      <a href="#home" style="font-size:1.5rem; font-weight:bold; color:#007acc;">
+        <i class="fas fa-leaf"></i> The Scent
+      </a>
+    </div>
+    <div class="nav-links">
+      <a href="#home"><i class="fas fa-home"></i> Home</a>
+      <a href="#about"><i class="fas fa-spa"></i> About</a>
+      <a href="#products"><i class="fas fa-box-open"></i> Products</a>
+      <a href="#quiz"><i class="fas fa-search"></i> Scent Quiz</a>
+      <a href="#testimonials"><i class="fas fa-comments"></i> Reviews</a>
+      <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
+      <span class="dark-toggle" onclick="toggleDarkMode()"><i class="fas fa-moon"></i></span>
+    </div>
+  </nav>
 
-**Step 6: "Wow Effect" priorities:**
-- Hero: animated mist, subtle parallax, ambient sound option, beautiful pulsing CTA
-- Interactive, visually-driven multi-step quiz with product match
-- Animated ingredient map
-- Section transitions (slight organic scroll fade/shape cut)
-- Dark/light mode with mood-aware color schemes
+  <!-- Hero Section -->
+  <header class="hero" id="home">
+    <!-- Video Background with Fallback Poster -->
+    <video autoplay muted loop poster="https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/scent2.jpg">
+      <source src="https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/videos/aroma.mp4" type="video/mp4">
+    </video>
+    <!-- Animated Scent Trail Overlay -->
+    <div class="scent-trail">
+      <svg viewBox="0 0 1440 320">
+        <path class="trail-path" d="M0,160 C480,320 960,0 1440,160" />
+      </svg>
+    </div>
+    <div class="hero-content">
+      <h1>Immerse in the Aroma</h1>
+      <p>Experience handcrafted, global aromatherapy for your mind and body.</p>
+      <a href="#products" class="btn">Discover Our Collection</a>
+    </div>
+  </header>
 
-**Step 7: Which advanced features do I actually include?**
-- All requirements from the prompt, plus at least:
-  - Ambient audio toggle (optional)
-  - Animated mist overlay (SVG)
-  - Ingredient map with animated points
-  - Section transitions
-  - Advanced quiz matching with engaging feedback
+  <!-- About Section with Parallax Effect -->
+  <section class="parallax about" id="about">
+    <div class="parallax-content">
+      <h2 class="section-title">Our Story</h2>
+      <p class="content">
+        Founded on the belief that nature heals, The Scent curates premium aroma and soap products from around the globe. Each product tells a story of artisanal craft, international quality, and the balance of mind, body, and spirit.
+      </p>
+    </div>
+  </section>
 
-**Step 8: Test/validate small code samples for hard parts.**
-- Test SVG mist animations and color contrast against both themes.
-- Test dark mode toggle/swapping color variables.
-- Make sure all focusable elements are keyboard-accessible.
-- Confirm floating CTA is visible and not obstructing forms.
-</think>
+  <!-- Interactive Scent Quiz -->
+  <section id="quiz">
+    <div class="quiz">
+      <h2>Find Your Scent</h2>
+      <div class="quiz-step">
+        <label for="mood">What is your current mood?</label>
+        <select id="mood">
+          <option value="calm">Calm</option>
+          <option value="energized">Energized</option>
+          <option value="focused">Focused</option>
+        </select>
+      </div>
+      <div class="quiz-step">
+        <label for="preference">Choose a scent preference:</label>
+        <select id="preference">
+          <option value="floral">Floral</option>
+          <option value="woody">Woody</option>
+          <option value="citrus">Citrus</option>
+          <option value="spicy">Spicy</option>
+        </select>
+      </div>
+      <div class="quiz-step">
+        <label for="intensity">Select intensity level:</label>
+        <select id="intensity">
+          <option value="light">Light</option>
+          <option value="moderate">Moderate</option>
+          <option value="strong">Strong</option>
+        </select>
+      </div>
+      <a href="#products" class="btn">Get Your Scent</a>
+    </div>
+  </section>
 
-<!-- Final Solution: Improved The Scent Landing Page -->
+  <!-- Products Section -->
+  <section id="products">
+    <h2 class="section-title">Our Products</h2>
+    <div class="products-grid">
+      <!-- Essential Oils -->
+      <div class="product">
+        <img src="https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/scent2.jpg" alt="Essential Oil 1">
+        <div class="product-info"><i class="fas fa-leaf"></i> Aroma Oil</div>
+      </div>
+      <div class="product">
+        <img src="https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/scent4.jpg" alt="Essential Oil 2">
+        <div class="product-info"><i class="fas fa-leaf"></i> Aroma Oil</div>
+      </div>
+      <div class="product">
+        <img src="https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/scent5.jpg" alt="Essential Oil 3">
+        <div class="product-info"><i class="fas fa-leaf"></i> Aroma Oil</div>
+      </div>
+      <div class="product">
+        <img src="https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/scent6.jpg" alt="Essential Oil 4">
+        <div class="product-info"><i class="fas fa-leaf"></i> Aroma Oil</div>
+      </div>
+      <!-- Premium Soaps -->
+      <div class="product">
+        <img src="https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/soap2.jpg" alt="Premium Soap 1">
+        <div class="product-info"><i class="fas fa-bath"></i> Premium Soap</div>
+      </div>
+      <div class="product">
+        <img src="https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/soap4.jpg" alt="Premium Soap 2">
+        <div class="product-info"><i class="fas fa-bath"></i> Premium Soap</div>
+      </div>
+      <div class="product">
+        <img src="https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/soap5.jpg" alt="Premium Soap 3">
+        <div class="product-info"><i class="fas fa-bath"></i> Premium Soap</div>
+      </div>
+      <div class="product">
+        <img src="https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/soap6.jpg" alt="Premium Soap 4">
+        <div class="product-info"><i class="fas fa-bath"></i> Premium Soap</div>
+      </div>
+    </div>
+  </section>
 
+  <!-- Testimonials Section -->
+  <section id="testimonials" class="testimonials">
+    <h2 class="section-title">What Our Customers Say</h2>
+    <div class="testimonial-item">
+      <p>"The Scent has transformed my daily routine. Every product feels like a journey to a peaceful escape."</p>
+      <span class="author"><i class="fas fa-user"></i> Alex</span>
+    </div>
+    <div class="testimonial-item">
+      <p>"I’ve never experienced such luxurious yet natural aromas. Truly a masterpiece of aromatherapy."</p>
+      <span class="author"><i class="fas fa-user"></i> Jamie</span>
+    </div>
+    <div class="testimonial-item">
+      <p>"From global ingredients to handcrafted art, The Scent is my secret to harmonious living."</p>
+      <span class="author"><i class="fas fa-user"></i> Taylor</span>
+    </div>
+  </section>
+
+  <!-- Global Ingredients / Map Section -->
+  <section class="global-ingredients">
+    <div class="content">
+      <h2 class="section-title">Global Ingredient Origins</h2>
+      <p>Discover the rich heritage of our carefully selected ingredients sourced from around the world.</p>
+      <div class="map-icons">
+        <div><i class="fas fa-globe"></i><span>Worldwide</span></div>
+        <div><i class="fas fa-seedling"></i><span>Organic</span></div>
+        <div><i class="fas fa-industry"></i><span>Artisanal</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Section -->
+  <section id="contact" class="section-dark" style="background: #222; color: #fff;">
+    <div class="newsletter">
+      <h2>Stay Updated</h2>
+      <p>Join our newsletter for exclusive offers, tips, and aroma stories directly to your inbox.</p>
+      <input type="email" placeholder="Enter your email">
+      <a href="#" class="btn">Subscribe</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="socials">
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+    </div>
+    <p>&copy; 2025 The Scent. All Rights Reserved.</p>
+  </footer>
+
+  <!-- Floating Shop Now Button -->
+  <a href="#products" class="shop-now"><i class="fas fa-shopping-bag"></i> Shop Now</a>
+
+  <!-- Dark Mode Toggle Script -->
+  <script>
+    function toggleDarkMode(){
+      document.body.classList.toggle('dark');
+      const toggleIcon = document.querySelector('.dark-toggle i');
+      if(document.body.classList.contains('dark')){
+        toggleIcon.classList.remove('fa-moon');
+        toggleIcon.classList.add('fa-sun');
+      } else {
+        toggleIcon.classList.remove('fa-sun');
+        toggleIcon.classList.add('fa-moon');
+      }
+    }
+  </script>
+</body>
+</html>
+```
+
+---
+
+### Additional Enhancements and Thoughts
+
+- **Immersive Micro‑Interactions:**  
+  The animated scent trail and hover effects on product images create a subtle multisensory experience. You could further enrich this by adding parallax scrolling on ingredient images or even a gentle, ambient background sound (with an optional mute) for visitors.
+
+- **Interactive Storytelling:**  
+  The integrated quiz hints at personalization. In a full‑fledged version, you might use JavaScript to create a multi‑step interactive experience that recommends products based on user input.
+
+- **Global Brand Narrative:**  
+  The “Global Ingredient Origins” section spotlights your artisanal and international approach. Expanding it with a dynamic world map or detailed ingredient stories would deepen visitor engagement.
+
+This elevated landing page design aims not only to showcase your products but to fully immerse visitors in the branded aromatic atmosphere of *The Scent*. Enjoy exploring further enhancements and making the experience uniquely yours!  
+https://copilot.microsoft.com/shares/3PMeoecbvzmJ18XWAMBjj
+
+---
+Below is the initial design for the landing page for "The Scent" aromatherapy store. Let's consider what factors could elevate it further.  
 ```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>The Scent — Signature Aromatherapy & Wellness</title>
-  <!-- Google Fonts for premium typography -->
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <title>The Scent – Premium Aromatherapy & Natural Well-being</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;500&family=Raleway:wght@400;500;600&display=swap" rel="stylesheet">
   <!-- Font Awesome for icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
-  <style>
-    :root {
-      --clr-bg: #f6f5f1;
-      --clr-bg-dark: #182024;
-      --clr-text: #262c2f;
-      --clr-text-dark: #ebeaea;
-      --clr-primary: #2c899a;
-      --clr-primary-dark: #30ccbb;
-      --clr-accent: #e4b77d;
-      --clr-accent-dark: #dc9123;
-      --clr-soap: #b9cfc3;
-      --clr-overlay: rgba(44,137,154,0.08);
-      --clr-overlay-dark: rgba(24,32,36,0.6);
-      --clr-cta: #e07453;
-      --clr-cta-dark: #ffb46a;
-
-      --font-head: 'Cormorant Garamond', serif;
-      --font-body: 'Montserrat', sans-serif;
-
-      --transition: 0.26s cubic-bezier(.35,2,.31,1);
-      --shadow: 0 8px 34px 0 rgba(60,35,16,0.11);
-      --shadow-dark: 0 8px 34px 0 rgba(0,0,0,0.16);
-      --container: 1160px;
-
-      --mist-light: rgba(255,255,255,0.17);
-      --mist-dark: rgba(200,235,255,0.26);
-
-      --parallax-blur: 2.5px;
-    }
-
-    /* ------- Reset -------- */
-    *, *:before, *:after { box-sizing: border-box; margin:0; padding:0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: var(--font-body); background: var(--clr-bg); color: var(--clr-text); line-height: 1.75;
-      min-height: 100vh; transition: background 0.7s, color 0.6s;
-    }
-    body.dark {
-      background: var(--clr-bg-dark); color: var(--clr-text-dark);
-    }
-    a { color: var(--clr-primary); text-decoration: none; transition: color .2s; }
-    a:focus { outline: 2px solid var(--clr-primary); }
-
-    /* ------- Navigation -------- */
-    nav.navbar {
-      width:100%; position:fixed; z-index:1009; top:0; left:0;
-      background:rgba(255,255,255,0.8); backdrop-filter: blur(8px);
-      box-shadow:0 2px 19px rgba(44,137,154,0.08);
-      display:flex; align-items:center; justify-content:center;
-      padding: 0.3rem 0;
-      transition: background .35s;
-    }
-    body.dark nav.navbar {
-      background:rgba(22,29,32,0.97);
-      box-shadow: var(--shadow-dark);
-    }
-    .nav-container {
-      width:90%; max-width: var(--container); display:flex; align-items:center; justify-content:space-between;
-    }
-    .brand {
-      font-family: var(--font-head); font-weight:700; font-size:2rem;
-      color:var(--clr-primary); letter-spacing:2px; display:flex; align-items:center; gap:.7em;
-      transition: color .2s;
-    }
-    body.dark .brand { color: var(--clr-primary-dark);}
-    .brand i {font-size:1.28em;color:var(--clr-accent);}
-    .nav-links {
-      display:flex; align-items:center; gap:2.8rem;
-    }
-    .nav-links a {
-      font-weight:600; text-transform:uppercase; font-size:.98rem;
-      letter-spacing: 1px; color:var(--clr-text);
-      display:inline-flex; align-items:center; gap:0.37em;
-      padding: 0.8em 0 0.6em 0;
-      position:relative;
-      transition: color .17s;
-    }
-    body.dark .nav-links a { color: var(--clr-text-dark);}
-    .nav-links a::after {
-      content: '';
-      position: absolute; left:28%; bottom:0; width:0; height:2.1px;
-      background: var(--clr-primary); border-radius:2px; transition: width .27s;
-    }
-    .nav-links a:hover, .nav-links a:focus { color: var(--clr-primary); }
-    .nav-links a:hover::after, .nav-links a:focus::after { width: 44%; }
-    .nav-links .dark-toggle {
-      background: none; border:none; cursor:pointer; margin-left:1.35rem;
-      font-size:1.36rem; color:var(--clr-primary);
-      display:inline-flex; align-items:center; transition: color .18s;
-    }
-    body.dark .nav-links .dark-toggle { color:var(--clr-accent-dark);}
-    .nav-links .dark-toggle:focus { outline:2px solid var(--clr-accent); }
-
-    /* ------- HERO SECTION -------- */
-    header.hero {
-      min-height: 100vh; position:relative; width:100%;
-      display:flex; flex-direction:column; align-items:center; justify-content:center;
-      overflow:hidden;
-      isolation: isolate;
-      box-shadow:0 6px 44px rgba(44,137,154,0.07);
-    }
-    .hero-bg-video {
-      position:absolute; inset:0; width:100vw; height:100vh; object-fit:cover; z-index:0;
-      filter: blur(0.7px) brightness(0.93);
-    }
-    .hero-bg-fallback {
-      display:none;
-    }
-    /* Animated scent mist overlay */
-    .mist-trails {
-      pointer-events:none; position:absolute; inset:0; z-index:2;
-      mix-blend-mode:lighten;
-    }
-    .mist-path {
-      fill:none; stroke:var(--mist-light); stroke-width: 14; opacity:.72;
-      stroke-linecap:round; stroke-linejoin:round;
-      filter: blur(0.5px);
-      stroke-dasharray:4400; stroke-dashoffset:4400;
-      animation: mistTrail 16s linear infinite;
-    }
-    .mist-path2 {
-      stroke: var(--mist-light); stroke-width: 8; opacity: 0.59;
-      stroke-dasharray:4000; stroke-dashoffset:4000;
-      animation: mistTrail2 22s linear infinite;
-    }
-    body.dark .mist-path, body.dark .mist-path2 {
-      stroke: var(--mist-dark);
-      opacity:0.77;
-    }
-    @keyframes mistTrail {
-      0% { stroke-dashoffset:4400; opacity:.45;}
-      65% { opacity:.87;}
-      100% { stroke-dashoffset:0; opacity:.45;}
-    }
-    @keyframes mistTrail2 {
-      0% { stroke-dashoffset:4000; opacity:0.22;}
-      35% { opacity:.6;}
-      100% { stroke-dashoffset:0; opacity:.33;}
-    }
-    /* Ambient audio toggle */
-    .ambient-audio {
-      position:fixed; top:1.2em; right:2.7em; z-index:9999; display:flex; align-items:center; gap:.1em;
-    }
-    .ambient-audio button {
-      background:rgba(255,255,255,0.62); border:none; border-radius:50%; color:var(--clr-primary);
-      font-size:1.45em; cursor:pointer; box-shadow:0 1px 7px rgba(44,137,154,0.055);
-      padding:.45em; transition:background .18s, color .14s;
-    }
-    .ambient-audio button:focus { outline:2px solid var(--clr-accent);}
-    .ambient-audio button:hover {
-      background:rgba(231,186,114,0.13); color:var(--clr-accent-dark);
-    }
-    body.dark .ambient-audio button { background:rgba(44,137,154,0.19); color:var(--clr-accent-dark);}
-    /* HERO CONTENT */
-    .hero-content {
-      z-index:10; max-width:760px; text-align:center; margin-inline:auto;
-      margin-top:8vh;
-      position:relative;
-    }
-    .hero-content h1 {
-      font-family:var(--font-head); font-size:clamp(2.9rem,7vw,4.4rem); color:#fff;
-      text-shadow:0 3px 16px rgba(32,66,88,0.29);
-      letter-spacing:1.7px;
-    }
-    .hero-content p {
-      color: #e5e8ea;
-      margin:2.5rem 0 3rem 0; font-size:clamp(1.25rem,2.4vw,1.55rem);
-      text-shadow:0 1px 6px rgba(50,80,92,0.17);
-    }
-    .hero-content .cta-main {
-      background:var(--clr-cta); color:white;
-      font-family:var(--font-body); font-weight:700;
-      font-size:1.2rem; padding:1.1em 2.5em;
-      border-radius:37px; border:none; cursor:pointer;
-      box-shadow:0 6px 22px rgba(244,112,83,0.16);
-      transition:background 0.22s, transform 0.19s, box-shadow 0.19s;
-      animation: popCta 1.8s infinite alternate cubic-bezier(.58,1.31,.55,.94);
-      display:inline-flex; align-items:center; gap:.95em;
-    }
-    .hero-content .cta-main i { font-size:1.26em; }
-    .hero-content .cta-main:hover, .hero-content .cta-main:focus {
-      background:var(--clr-accent); color:var(--clr-primary);
-      transform:scale(1.06);
-      box-shadow:0 10px 26px rgba(228,183,125,0.22);
-      outline:none;
-    }
-    @keyframes popCta {
-      0% { box-shadow:0 0 26px 0 #ffd7b5a6;   }
-      100% { box-shadow:0 10px 28px 0 #e074535c; transform:scale(1.04);}
-    }
-    /* --- Floating shop now button --- */
-    .shop-now {
-      position:fixed; bottom:2.2em; right:2.2em; z-index:1091;
-      background:var(--clr-cta); color:#fff; font-size:1rem; font-weight:600;
-      border-radius:50px; padding:1.1em 2em 1.09em 2.3em;
-      box-shadow:0 6px 19px rgba(255,115,80,0.16);
-      display:flex; align-items:center; gap:0.86em;
-      transition: background .22s, transform .2s, box-shadow .19s;
-      border: none; cursor: pointer;
-      animation: shopNowPulse 1.88s infinite alternate cubic-bezier(.44,1.38,.46,1);
-    }
-    .shop-now i { font-size:1.38em; }
-    .shop-now:hover, .shop-now:focus {
-      background:var(--clr-accent); color:var(--clr-primary);
-      transform:scale(1.08);
-      box-shadow: 0 8px 30px #e4b77dbf;
-      outline:none;
-    }
-    @keyframes shopNowPulse {
-      0% { box-shadow: 0 0 15px 0 #ffae885c;}
-      100% { box-shadow: 0 0 35px 11px #e4b77d29;}
-    }
-
-    /* Hide shop now button on mobile or overlapping forms */
-    @media (max-width:615px) {
-      .shop-now { bottom:1.2em; right:3vw; font-size:.93rem;}
-    }
-
-    /* ------- Section base styles -------- */
-    section { padding:5.6rem 0 5rem 0;}
-    .container { width:88%; max-width:var(--container); margin-inline:auto; }
-    section h2 { font-family:var(--font-head); font-size:2.6rem; color:var(--clr-primary); text-align:center; margin-bottom:2.6rem; letter-spacing:.5px; }
-    body.dark section h2 { color:var(--clr-accent-dark); }
-
-    /* ------- About w/Parallax Ingredients -------- */
-    .about-section { background: linear-gradient(118deg, #ecf8f8 60%, #faf7ee 100%); position:relative; overflow:hidden; }
-    body.dark .about-section { background: linear-gradient(114deg, #243439 70%, #202326 100%);}
-    .about-parallax {
-      display:flex; align-items:center; justify-content:center; gap:4vw;
-      width:100%; max-width:1040px; margin-inline:auto;
-      min-height: 320px;
-    }
-    .about-parallax-img {
-      flex:1.7 1 0; min-width:290px; position:relative;
-      perspective:400px; transform-style:preserve-3d;
-    }
-    .about-parallax-img img {
-      border-radius:19px; width:100%; max-width:420px;
-      box-shadow: 0 18px 60px -10px #b9cfc34a;
-      filter: blur(var(--parallax-blur));
-      transition: filter .34s, transform .6s;
-      will-change: transform;
-      pointer-events: none;
-    }
-    .about-parallax-text {
-      flex:2.5 1 0; min-width: 290px;
-      position:relative; z-index:7;
-      padding:1.2em 1.1rem 1.1em 1.4em;
-    }
-    .about-parallax-text h2 { text-align:left;}
-    .about-parallax-text p {
-      font-size:1.11rem; margin-bottom:1.7rem; color:var(--clr-text); max-width:90vw;
-    }
-    body.dark .about-parallax-text p { color:var(--clr-text-dark);}
-    .about-icons {
-      display:flex; gap:2em; margin-top:.8em;
-      font-size:1.7em; justify-content:left; align-items:center;
-    }
-    .about-icons span {
-      color:var(--clr-primary); font-size:.72em; margin-left:.3em;
-      font-family:var(--font-body); opacity:.75; letter-spacing:1.5px;
-    }
-    body.dark .about-icons i, body.dark .about-icons span {
-      color:var(--clr-accent-dark); opacity:.80;
-    }
-    /* Parallax on scroll */
-    @media (pointer:fine) {
-      .about-parallax-img.scrolled img { filter: blur(0.2px) saturate(1.13) contrast(1.09); transform: scale(1.07) rotateZ(-3deg);}
-    }
-    @media (max-width:900px) {
-      .about-parallax { flex-direction:column;}
-      .about-parallax-img, .about-parallax-text { min-width: 0; width:100%;}
-      .about-parallax-img img { max-width: 320px;}
-      .about-parallax-text { text-align:center; padding-left:0;}
-      .about-icons { justify-content:center; }
-    }
-    @media (max-width:480px) {
-      .about-parallax-img img { max-width: 95vw;}
-    }
-    /* Ingredients Map */
-    .ingredient-map-wrap { margin:2em auto 0 auto; max-width:650px; text-align:center;}
-    .ingredient-map-title { text-align:center; color:var(--clr-primary); font-size:1.29rem; margin-bottom:1.1rem;}
-    body.dark .ingredient-map-title { color:var(--clr-accent-dark);}
-    .ingredient-map {
-      position:relative; width:100%; max-width:560px; height:auto;
-      margin:1.2rem auto 0 auto;
-      border-radius:13px; box-shadow:0 3px 18px #bbb9c97c;
-      overflow:visible;
-    }
-    .ingredient-map img { width:100%; display:block; border-radius:13px;}
-    .ingredient-marker {
-      position:absolute; width:25px; height:25px;
-      left:0; top:0; transform:translate(-55%, -80%);
-      cursor:pointer; z-index:10;
-    }
-    .ingredient-marker .marker-pulse {
-      position:absolute; left:5px; top:5px; width:14px;height:14px;background:var(--clr-accent);border-radius:50%;
-      animation: markerPulse 1.5s infinite alternate cubic-bezier(.71,2,.32,1);
-    }
-    @keyframes markerPulse {
-      from { box-shadow: 0 0 7px 3px #ffd7b5a7;}
-      to { box-shadow: 0 0 17px 9px #e4b77d3c;}
-    }
-    .ingredient-marker .marker-label {
-      pointer-events:none;
-      opacity:0; min-width:80px; white-space:nowrap;
-      background:rgba(25,39,45,0.97); color:#fff; font-size:.98em;
-      padding:4.5px 14px; border-radius:7px; position:absolute;
-      left:2.3em; top:55%; transform:translateY(-50%);
-      font-family:var(--font-body);
-      transition:opacity 0.18s cubic-bezier(.74,2,0,1);
-      box-shadow:0 2px 9px #344c4e28;
-    }
-    .ingredient-marker:focus .marker-label,
-    .ingredient-marker:hover .marker-label {
-      opacity:1;
-    }
-    /* ------- Products Grid -------- */
-    .products-section {
-      background:#fff; box-shadow:0 7px 38px #e8eaf135;
-    }
-    body.dark .products-section { background: #222829;}
-    .products-grid {
-      display:grid; grid-template-columns: repeat(auto-fit,minmax(248px,1fr));
-      gap:2.2rem;
-      margin-top:3rem;
-    }
-    .product-card {
-      background:#f9faf9;
-      border-radius:15px;
-      box-shadow:0 4px 19px rgba(44,137,154,0.09);
-      transition:transform .25s, box-shadow .28s, background .19s;
-      overflow:hidden; cursor:pointer; position:relative;
-      display:flex; flex-direction:column; align-items:stretch;
-    }
-    .product-card:hover, .product-card:focus {
-      transform:translateY(-8px) scale(1.04);
-      box-shadow:0 9px 34px #e4b77d42, 0 12px 34px #3bcccc19;
-      background:linear-gradient(114deg, #f8faef 60%, #e7f6f6 100%);
-      outline:none;
-    }
-    body.dark .product-card { background:#232c2e;}
-    .product-card img {
-      width:100%; height:220px; object-fit:cover; border-radius:15px 15px 0 0; transition: opacity .23s;
-    }
-    .product-card:hover img { opacity:.86; }
-    .product-info {
-      padding:1.4em 1.3em 1em 1.3em; text-align:center; flex:1 1 0;
-      display:flex; flex-direction:column; justify-content:center; align-items:center;
-    }
-    .product-info h3 { font-family:var(--font-head); font-size:1.28em; margin-bottom:0.59em; color:var(--clr-primary);}
-    body.dark .product-info h3 { color:var(--clr-accent-dark);}
-    .product-info p { font-size:0.97em; color:#444; }
-    body.dark .product-info p { color:#eaeaea;}
-    .product-info .product-link {
-      display:inline-flex; align-items:center; gap:0.57em;
-      margin-top:.93em; color:var(--clr-cta);
-      font-weight:600; text-transform:uppercase; font-size:0.99em;
-      transition: color .18s; border-bottom:1.7px solid transparent;
-      padding-bottom:2px;
-    }
-    .product-card:hover .product-link, .product-link:focus {
-      color:var(--clr-accent); border-bottom:1.7px solid var(--clr-accent);
-    }
-
-    /* -------- Scent Quiz (multi-step animated) -------- */
-    .finder-section {
-      background: linear-gradient(115deg, #e6f4ea 70%, #f9f6ee 100%);
-      min-height:490px;
-    }
-    body.dark .finder-section {
-      background: linear-gradient(110deg, #263239 85%, #1a2027 100%);
-    }
-    .quiz-wrap { max-width:640px; margin:0 auto; padding:3em 2.2em; box-shadow:0 6px 28px #bbb7c778; border-radius:19px; background: rgba(255,255,255,0.89);}
-    body.dark .quiz-wrap { background: rgba(34,41,40,0.98); box-shadow:0 7px 33px #0006;}
-    .quiz-headline { text-align:center; font-size:2.08rem; margin-bottom:1.3rem; color:var(--clr-primary);}
-    body.dark .quiz-headline { color:var(--clr-accent-dark);}
-    .multi-quiz { margin-top:1.4em; }
-    .quiz-step { display:none; min-height:140px; animation:fadInUp .73s;}
-    .quiz-step.active { display:block;}
-    @keyframes fadInUp {
-      from { opacity:.15; transform:translateY(21px);}
-      to   { opacity:1;   transform:translateY(0);}
-    }
-    .quiz-q {
-      font-family: var(--font-head); font-size:1.23em; margin-bottom:1.1em; color:var(--clr-text);
-    }
-    body.dark .quiz-q { color:var(--clr-accent-dark);}
-    .quiz-options {
-      display:flex; gap:1.35em; flex-wrap:wrap; justify-content:center; margin-bottom:1.6em;
-    }
-    .quiz-opt {
-      background:var(--clr-primary); color:#fff; border:none; border-radius:29px; font-family:var(--font-body); font-size:1.06em; font-weight:600;
-      padding:.9em 2.1em; margin:0 0.61em 0.7em 0;
-      box-shadow:0 2px 14px #41bbb418;
-      cursor:pointer; transition:background .16s, transform .16s;
-      display:flex; align-items:center; gap:.65em;
-    }
-    .quiz-opt:focus, .quiz-opt:hover {
-      background:var(--clr-accent); color:var(--clr-primary);
-      transform:scale(1.08);
-      outline:none;
-    }
-    .quiz-progress {
-      text-align:center; font-size:1.01em; color:var(--clr-primary);opacity: .78;
-      margin-bottom:0.7em;
-    }
-    body.dark .quiz-progress { color:var(--clr-accent-dark);}
-    .quiz-result {
-      display:none; text-align:center; padding:1.2em .7em;
-      animation:fadInUp .7s; min-height:180px;
-    }
-    .quiz-result h4 { font-size:1.26em; color:var(--clr-accent); margin-bottom:.7em;}
-    .quiz-result .products-grid { margin-top:1.45em;}
-    /* --------- Testimonials --------- */
-    .testimonials-section {
-      background:#f7fbfc; position:relative;
-    }
-    body.dark .testimonials-section { background:#1e2a2d;}
-    .testi-headline { font-size:2.19em; color:var(--clr-primary); margin-bottom:2.7rem;}
-    body.dark .testi-headline { color:var(--clr-accent-dark);}
-    .testimonials-grid {
-      display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:2.8em;
-      padding-bottom:1.2em;
-    }
-    .testimonial {
-      background:#fff;
-      border-radius:16px; box-shadow:0 2px 13px #b9cfc349;
-      padding:2.1em 1.4em; text-align:left;
-      opacity:0; transform:translateY(24px); transition: all .78s;
-    }
-    .testimonial.visible {
-      opacity:1; transform:translateY(0);
-    }
-    body.dark .testimonial {
-      background:#283236; color:#d9f5f4;
-      box-shadow:0 6px 19px #22264754;
-    }
-    .testimonial p { font-style:italic; color:#345; margin-bottom:1.3em;}
-    .testimonial .testi-author { font-weight:700; color:var(--clr-accent);}
-    body.dark .testimonial .testi-author { color:var(--clr-accent-dark);}
-    .testimonial .testi-stars { color:var(--clr-primary); letter-spacing:1.4px; font-size:1.08em;}
-    body.dark .testimonial .testi-stars { color:var(--clr-accent);}
-
-    /* --------- Newsletter ---------- */
-    .newsletter-section {
-      background:var(--clr-primary); color:#fff;
-      text-align:center; padding:4.2em 0 4.8em 0;
-    }
-    body.dark .newsletter-section { background:var(--clr-accent-dark);}
-    .newsletter-section h2 { color:#fff; }
-    .newsletter-form {
-      margin:2em 0 0 0; display:flex; justify-content:center; gap:.7em; flex-wrap:wrap;
-      max-width:620px; margin-inline:auto;
-    }
-    .newsletter-form input[type="email"] {
-      font-size:1.03em; font-family:var(--font-body); padding:1.09em 1.2em; border-radius:35px; border:none;
-      background:rgba(255,255,255,0.86); color:var(--clr-primary); min-width:210px;
-      margin-bottom:.7em; flex:1 1 150px;
-      box-shadow:0 2px 7px rgba(44,137,154,0.07);
-    }
-    .newsletter-form button {
-      background:var(--clr-accent); color:var(--clr-primary); font-weight:700; font-size:.97em;
-      border-radius:35px; border:none; cursor:pointer; padding:.9em 2.2em; transition:background .18s;
-      box-shadow:0 2px 8px #e4b77d28;
-    }
-    .newsletter-form button:focus, .newsletter-form button:hover {
-      background:var(--clr-text-light); color:var(--clr-accent-dark);
-    }
-
-    /* --------- Footer ---------- */
-    footer {
-      background:#213034; color:#cdd6d9; padding:3em 0 0.9em 0; position:relative; margin-top:0; font-size:.98em;
-    }
-    .footer-container { max-width:var(--container); margin:auto; display:flex; flex-wrap:wrap; gap:3.5em; justify-content:space-between; padding:0 3vw;}
-    .footer-block { flex:1 1 160px; margin-bottom:1.1em;}
-    .footer-block h4 { color:var(--clr-primary); margin-bottom:.97em; font-size:1.17em; letter-spacing:.4px;}
-    .footer-links, .footer-contact ul { list-style:none; padding-left:0;}
-    .footer-links a { color:#d6e1de; padding:0.1em 1px; transition: color .15s;}
-    .footer-links a:hover, .footer-links a:focus { color:var(--clr-accent);}
-    .footer-socials {
-      display:flex; gap:1.3em; margin-top:.6em;
-    }
-    .footer-socials a { color:var(--clr-primary); font-size:1.14em; transition: color .12s,transform .15s;}
-    .footer-socials a:hover, .footer-socials a:focus { color:var(--clr-accent);transform:scale(1.16);}
-    .footer-contact ul { color:#dbeef9;}
-    .footer-contact i {color:var(--clr-accent); font-size:1em; margin-right:.6em;}
-    .footer-bottom {
-      border-top:1px solid #2f494f68; padding-top:1.1em; margin-top:2em; text-align:center; color:#c4ddd7;
-    }
-    .footer-payments i { font-size:1.8em; margin:0 .41em; color:#b9cfc3;}
-
-    /* --- Section transitions and shapes -- */
-    .curve-separator {
-      position: relative; height: 55px; margin-top:-3rem; background:none; pointer-events:none; z-index:4;
-    }
-    .curve-separator svg { display:block; width:100%; height:100%; }
-    .curve-separator path { fill: var(--clr-bg);}
-    body.dark .curve-separator path { fill: var(--clr-bg-dark);}
-    /* --- Responsive --- */
-    @media (max-width:1000px) {
-      .footer-container { gap:1.7em;}
-    }
-    @media (max-width:768px) {
-      nav .nav-container { flex-direction:column; gap:.9em;}
-      .nav-links { gap:1.1em;}
-      .about-parallax { gap:1.1em; }
-      .products-grid { grid-template-columns:1fr 1fr;}
-      .testimonials-grid { grid-template-columns:1fr;}
-      .footer-container {flex-direction:column; gap:1em;}
-    }
-    @media (max-width:545px) {
-      header.hero .hero-content h1 { font-size:2rem;}
-      .nav-links { gap:0.17em; flex-wrap:wrap;}
-      section {padding:3.5em 0;}
-      .curve-separator { height: 34px;}
-      .products-grid { grid-template-columns:1fr;}
-      .quiz-wrap { padding:1.1em .3em;}
-    }
-
-    /* -- Reduce motion support for neurodiverse users -- */
-    @media (prefers-reduced-motion: reduce) {
-      .mist-path, .mist-path2,
-      .shop-now, .hero-content .cta-main, .about-parallax-img img, .product-card, .testimonial, * { animation-duration:0.01s !important;}
-    }
-  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+  <!-- AOS (Animate On Scroll) -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css"/>
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <!-- Ambient background audio toggle -->
-  <div class="ambient-audio">
-    <audio id="scentAudio" loop src="https://cdn.pixabay.com/audio/2022/10/16/audio_12bac8f711.mp3"></audio>
-    <button id="audioBtn" aria-label="Toggle ambient scent sound"><i class="fas fa-volume-mute"></i></button>
+  <!-- SVG animated mist overlay -->
+  <div class="scent-mist-overlay" aria-hidden="true">
+    <svg viewBox="0 0 320 80" width="100%" height="100%">
+      <path class="mist1" d="M0,40 Q60,20 120,40 T240,40 T320,30" fill="none" stroke="rgba(255,255,255,0.13)" stroke-width="18"/>
+      <path class="mist2" d="M0,60 Q80,80 160,60 T320,50" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="12"/>
+    </svg>
   </div>
-  <!-- Navigation bar -->
-  <nav class="navbar" aria-label="Main Navigation">
-    <div class="nav-container">
-      <span class="brand"><i class="fas fa-leaf"></i> The Scent</span>
-      <div class="nav-links">
-        <a href="#hero"><i class="fa-solid fa-home"></i> Home</a>
-        <a href="#about"><i class="fa-solid fa-spa"></i> About</a>
-        <a href="#products"><i class="fa-solid fa-box-open"></i> Shop</a>
-        <a href="#finder"><i class="fa-solid fa-flask-vial"></i> Quiz</a>
-        <a href="#testimonials"><i class="fa-solid fa-comments"></i> Reviews</a>
-        <a href="#contact"><i class="fa-solid fa-envelope"></i> Contact</a>
-        <button class="dark-toggle" id="darkToggle" aria-label="Toggle light/dark mode"><i class="fas fa-moon"></i></button>
+  <!-- Ambient audio toggle -->
+  <div class="ambient-audio-toggle">
+    <audio id="ambient-audio" loop src="relaxing-001.m4a"></audio>
+    <button id="audio-toggle-btn" aria-label="Toggle background sound">
+      <i class="fas fa-volume-mute"></i>
+    </button>
+  </div>
+  <!-- Header -->
+  <header class="main-header">
+    <div class="container header-container">
+      <div class="logo">
+        <a href="#">The Scent</a>
+        <span>AROMATHERAPY</span>
       </div>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#products">Shop</a></li>
+          <li><a href="#finder">Scent Finder</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="header-icons">
+        <a href="#" aria-label="Search"><i class="fas fa-search"></i></a>
+        <a href="#" aria-label="Account"><i class="fas fa-user"></i></a>
+        <a href="#" aria-label="Cart"><i class="fas fa-shopping-bag"></i></a>
+      </div>
+      <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+      </button>
     </div>
-  </nav>
-  <!-- HERO SECTION with animated mist trails and video bg -->
-  <header class="hero" id="hero">
-    <video class="hero-bg-video" autoplay muted loop playsinline poster="https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/scent5.jpg">
-      <source src="https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/videos/aroma.mp4" type="video/mp4">
-      <!-- Fallback image for browsers not supporting video -->
-      <img class="hero-bg-fallback" src="https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/scent5.jpg" alt="Calm Aroma Visual">
-    </video>
-    <!-- Animated mist/scent trails overlay SVG -->
-    <div class="mist-trails" aria-hidden="true">
-      <svg width="100%" height="100%" viewBox="0 0 1400 700" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:absolute;left:0;top:0;width:100%;height:100%;">
-        <path class="mist-path"
-              d="M0,580 Q280,430 530,590 T800,410 Q1000,210 1400,350"
-        />
-        <path class="mist-path2"
-          d="M0,650 Q460,600 880,580 T1400,680"
-        />
-      </svg>
-    </div>
-    <div class="hero-content">
-      <h1>Immerse Yourself in Aroma</h1>
-      <p>Handcrafted global aromatherapy made with rare botanicals and expertise—for your mind, body, and soul.</p>
-      <a href="#products" class="cta-main" role="button"><i class="fa-solid fa-bag-shopping"></i> Shop Our Collection</a>
-    </div>
+    <nav class="mobile-nav">
+      <ul>
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#products">Shop</a></li>
+        <li><a href="#finder">Scent Finder</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#">Search</a></li>
+        <li><a href="#">Account</a></li>
+        <li><a href="#">Cart</a></li>
+      </ul>
+    </nav>
   </header>
-
-  <!-- Floating Shop Now Button -->
-  <a href="#products" class="shop-now"><i class="fa-solid fa-bag-shopping"></i> Shop Now</a>
-
-  <!-- Decorative organic separator -->
-  <div class="curve-separator" aria-hidden="true">
-    <svg viewBox="0 0 1440 60"><path d="M0,32c128,32,320,-12,580,0c260,12,368,44,544,28c100,-10,178,-16,316,-20v20H0Z"></path></svg>
-  </div>
-
-  <!-- ABOUT/PARALLAX section -->
-  <section id="about" class="about-section">
-    <div class="about-parallax">
-      <div class="about-parallax-img" id="aboutParallaxImg">
-        <img src="https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/scent4.jpg" loading="lazy" alt="Botanical Aromatic Ingredients">
+  <main>
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+      <div class="hero-media">
+        <video autoplay muted loop playsinline poster="https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/scent5.jpg">
+          <source src="https://www.youtube.com/watch?v=0ZyLtwJlDos" type="video/mp4">
+          <img src="https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/scent5.jpg" alt="Calming Nature">
+        </video>
       </div>
-      <div class="about-parallax-text">
-        <h2>Nature's Wisdom in Every Drop</h2>
-        <p>
-          Founded on the belief that nature restores, <b>The Scent</b> fuses the world's finest botanicals into harmonious blends.
-          Our aroma oils and soaps are crafted by experts using globally sourced ingredients,
-          blending passion with science to nurture your well-being.
-        </p>
-        <div class="about-icons">
-          <span><i class="fa-solid fa-globe"></i> <span>Global</span></span>
-          <span><i class="fa-solid fa-recycle"></i> <span>Eco</span></span>
-          <span><i class="fa-solid fa-flask"></i> <span>Expertly Formulated</span></span>
-        </div>
+      <div class="container hero-content" data-aos="fade-in">
+        <h1>Find Your Moment of Calm</h1>
+        <p>Experience premium, natural aromatherapy crafted to enhance well-being and restore balance.</p>
+        <a href="#products" class="btn btn-primary">Explore Our Collections</a>
       </div>
-    </div>
-    <!-- INGREDIENT MAP with animated markers -->
-    <div class="ingredient-map-wrap">
-      <div class="ingredient-map-title">Our Signature Ingredients Come from Every Corner</div>
-      <div class="ingredient-map" style="width:100%;max-width:480px;">
-        <img src="https://raw.githubusercontent.com/nordeim/The-Scent-ideas/refs/heads/main/images/BlankMap-World-noborders.jpg" alt="World Map of Ingredient Origins" />
-        <!-- France, Lavender -->
-        <div class="ingredient-marker" tabindex="0" style="left:43%;top:45%;">
-          <div class="marker-pulse"></div>
-          <span class="marker-label">Lavender<br><small>France</small></span>
+    </section>
+    <!-- About Section with ingredient map -->
+    <section id="about" class="about-section">
+      <div class="container about-container">
+        <div class="about-image" data-aos="fade-right">
+          <img src="https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/scent6.jpg" alt="Natural Ingredients">
         </div>
-        <!-- Japan, Cedarwood -->
-        <div class="ingredient-marker" tabindex="0" style="left:76.5%;top:50%;">
-          <div class="marker-pulse"></div>
-          <span class="marker-label">Cedarwood<br><small>Japan</small></span>
-        </div>
-        <!-- Mediterranean, Rosemary -->
-        <div class="ingredient-marker" tabindex="0" style="left:48%;top:55%;">
-          <div class="marker-pulse"></div>
-          <span class="marker-label">Rosemary<br><small>Mediterranean</small></span>
-        </div>
-        <!-- Brazil, Orange -->
-        <div class="ingredient-marker" tabindex="0" style="left:35%;top:73%;">
-          <div class="marker-pulse"></div>
-          <span class="marker-label">Orange<br><small>Brazil</small></span>
+        <div class="about-text" data-aos="fade-left">
+          <h2>Rooted in Nature, Crafted with Care</h2>
+          <p>At The Scent, we harness the power of nature to nurture your mental and physical well-being. Our high-quality, sustainably sourced ingredients are transformed into exquisite aromatherapy products that help you reclaim balance and serenity.</p>
+          <a href="#" class="btn btn-secondary">Learn Our Story</a>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- Decorative separator -->
-  <div class="curve-separator" aria-hidden="true">
-    <svg viewBox="0 0 1440 80"><path d="M0,40c180,48,460,14,740,18c280,4,440,61,700,0v22H0z"></path></svg>
-  </div>
-
-  <!-- PRODUCTS GRID -->
-  <section id="products" class="products-section">
-    <div class="container">
-      <h2>Our Artisanal Collections</h2>
-      <div class="products-grid">
-        <div class="product-card" tabindex="0">
-          <img src="https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/scent2.jpg" alt="Serenity Blend Oil">
-          <div class="product-info">
-            <h3>Serenity Blend Oil</h3>
-            <p>Calming Lavender & Chamomile</p>
-            <span class="product-link"><i class="fa-solid fa-leaf"></i> View Product</span>
+      <!-- Ingredient provenance map -->
+      <div class="ingredient-map-container" data-aos="fade-up">
+        <h3>Our Global Ingredients</h3>
+        <div class="ingredient-map">
+          <!-- SVG world map (simple or swap for your custom image) -->
+          <img src="https://raw.githubusercontent.com/nordeim/The-Scent-ideas/refs/heads/main/images/BlankMap-World-noborders.jpg" alt="Ingredient Origins">
+          <!-- Example Points -->
+          <div class="map-point" style="left:41%;top:57%;">
+            <div class="point-pulse"></div>
+            <span class="map-tooltip">Lavender<br><small>France</small></span>
           </div>
-        </div>
-        <div class="product-card" tabindex="0">
-          <img src="https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/scent4.jpg" alt="Focus Flow Oil">
-          <div class="product-info">
-            <h3>Focus Flow Oil</h3>
-            <p>Invigorating Rosemary & Mint</p>
-            <span class="product-link"><i class="fa-solid fa-leaf"></i> View Product</span>
+          <div class="map-point" style="left:74%;top:53%;">
+            <div class="point-pulse"></div>
+            <span class="map-tooltip">Cedarwood<br><small>Japan</small></span>
           </div>
-        </div>
-        <div class="product-card" tabindex="0">
-          <img src="https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/soap4.jpg" alt="Citrus Burst Soap">
-          <div class="product-info">
-            <h3>Citrus Burst Soap</h3>
-            <p>Energizing Lemon & Orange Peel</p>
-            <span class="product-link"><i class="fa-solid fa-bath"></i> View Product</span>
+          <div class="map-point" style="left:48%;top:59%;">
+            <div class="point-pulse"></div>
+            <span class="map-tooltip">Rosemary<br><small>Mediterranean</small></span>
           </div>
-        </div>
-        <div class="product-card" tabindex="0">
-          <img src="https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/soap6.jpg" alt="Woodland Retreat Soap">
-          <div class="product-info">
-            <h3>Woodland Retreat Soap</h3>
-            <p>Grounding Cedarwood & Pine</p>
-            <span class="product-link"><i class="fa-solid fa-bath"></i> View Product</span>
+          <div class="map-point" style="left:36%;top:74%;">
+            <div class="point-pulse"></div>
+            <span class="map-tooltip">Orange<br><small>Brazil</small></span>
           </div>
+          <!-- ...add more as desired -->
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- PARALLAX separator -->
-  <div class="curve-separator" aria-hidden="true">
-    <svg viewBox="0 0 1440 56"><path d="M0,0c160,64,480,54,720,30c240,-24,520,-24,720,40v10H0z"></path></svg>
-  </div>
-
-  <!-- Inline SCENT QUIZ (interactive) -->
-  <section id="finder" class="finder-section">
-    <div class="container">
-      <div class="quiz-wrap">
-        <div class="quiz-headline">Discover Your Perfect Scent</div>
-        <form id="scentQuiz" class="multi-quiz" autocomplete="off">
-          <div class="quiz-step active" data-step="1">
-            <div class="quiz-q"><i class="fa-solid fa-brain"></i> What do you want right now?</div>
-            <div class="quiz-options">
-              <button type="button" class="quiz-opt" data-value="relax"><i class="fa-solid fa-leaf"></i> Relaxation</button>
-              <button type="button" class="quiz-opt" data-value="energize"><i class="fa-solid fa-bolt"></i> Energy</button>
-              <button type="button" class="quiz-opt" data-value="focus"><i class="fa-solid fa-eye"></i> Focus</button>
-              <button type="button" class="quiz-opt" data-value="sleep"><i class="fa-solid fa-moon"></i> Sleep</button>
+    </section>
+    <!-- Products Section -->
+    <section id="products" class="products-section">
+      <div class="container">
+        <h2 data-aos="fade-down">Featured Collections</h2>
+        <div class="product-grid">
+          <div class="product-card" data-aos="fade-up" data-aos-delay="100">
+            <img src="https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/scent2.jpg" alt="Serenity Blend Oil">
+            <div class="product-info">
+              <h3>Serenity Blend Oil</h3>
+              <p>Calming Lavender & Chamomile</p>
+              <a href="#" class="product-link">View Product</a>
             </div>
           </div>
-          <div class="quiz-step" data-step="2">
-            <div class="quiz-q"><i class="fa-solid fa-spa"></i> Which scent appeals to you?</div>
-            <div class="quiz-options">
-              <button type="button" class="quiz-opt" data-value="floral"><i class="fa-solid fa-seedling"></i> Floral</button>
-              <button type="button" class="quiz-opt" data-value="citrus"><i class="fa-solid fa-lemon"></i> Citrus</button>
-              <button type="button" class="quiz-opt" data-value="woody"><i class="fa-solid fa-tree"></i> Woody</button>
-              <button type="button" class="quiz-opt" data-value="herbal"><i class="fa-solid fa-mortar-pestle"></i> Herbal</button>
+          <div class="product-card" data-aos="fade-up" data-aos-delay="200">
+            <img src="https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/soap4.jpg" alt="Citrus Burst Soap">
+            <div class="product-info">
+              <h3>Citrus Burst Soap</h3>
+              <p>Energizing Lemon & Orange Peel</p>
+              <a href="#" class="product-link">View Product</a>
             </div>
           </div>
-          <div class="quiz-step" data-step="3">
-            <div class="quiz-q"><i class="fa-solid fa-bottle-droplet"></i> Pick your preferred type</div>
+          <div class="product-card" data-aos="fade-up" data-aos-delay="300">
+            <img src="https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/scent4.jpg" alt="Focus Flow Oil">
+            <div class="product-info">
+              <h3>Focus Flow Oil</h3>
+              <p>Invigorating Rosemary & Mint</p>
+              <a href="#" class="product-link">View Product</a>
+            </div>
+          </div>
+          <div class="product-card" data-aos="fade-up" data-aos-delay="400">
+            <img src="https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/soap6.jpg" alt="Woodland Retreat Soap">
+            <div class="product-info">
+              <h3>Woodland Retreat Soap</h3>
+              <p>Grounding Cedarwood & Pine</p>
+              <a href="#" class="product-link">View Product</a>
+            </div>
+          </div>
+        </div>
+        <div class="view-all-cta">
+          <a href="#" class="btn btn-primary">Shop All Products</a>
+        </div>
+      </div>
+    </section>
+    <!-- Scent Finder Interactive Quiz Section -->
+    <section id="finder" class="finder-section">
+      <div class="container">
+        <h2 data-aos="fade-up">Discover Your Perfect Scent</h2>
+        <form id="scent-quiz" class="scent-quiz" autocomplete="off" data-aos="fade-up">
+          <div class="quiz-step" data-step="1">
+            <h3>What do you want right now?</h3>
             <div class="quiz-options">
-              <button type="button" class="quiz-opt" data-value="oil"><i class="fa-solid fa-bottle-droplet"></i> Essential Oil</button>
-              <button type="button" class="quiz-opt" data-value="soap"><i class="fa-solid fa-bath"></i> Soap</button>
-              <button type="button" class="quiz-opt" data-value="both"><i class="fa-solid fa-box"></i> Both</button>
+              <button type="button" class="quiz-option" data-value="relax"><i class="fas fa-leaf"></i> Relaxation</button>
+              <button type="button" class="quiz-option" data-value="energize"><i class="fas fa-bolt"></i> Energy</button>
+              <button type="button" class="quiz-option" data-value="focus"><i class="fas fa-brain"></i> Focus</button>
+              <button type="button" class="quiz-option" data-value="sleep"><i class="fas fa-moon"></i> Restful Sleep</button>
+            </div>
+          </div>
+          <div class="quiz-step" data-step="2" style="display:none;">
+            <h3>Which scents appeal to you?</h3>
+            <div class="quiz-options">
+              <button type="button" class="quiz-option" data-value="floral"><i class="fas fa-seedling"></i> Floral</button>
+              <button type="button" class="quiz-option" data-value="citrus"><i class="fas fa-lemon"></i> Citrus</button>
+              <button type="button" class="quiz-option" data-value="woody"><i class="fas fa-tree"></i> Woody</button>
+              <button type="button" class="quiz-option" data-value="herbal"><i class="fas fa-spa"></i> Herbal</button>
+            </div>
+          </div>
+          <div class="quiz-step" data-step="3" style="display:none;">
+            <h3>Pick your preferred format:</h3>
+            <div class="quiz-options">
+              <button type="button" class="quiz-option" data-value="oil"><i class="fas fa-bottle-droplet"></i> Essential Oil</button>
+              <button type="button" class="quiz-option" data-value="soap"><i class="fas fa-soap"></i> Soap</button>
+              <button type="button" class="quiz-option" data-value="both"><i class="fas fa-box"></i> Both</button>
             </div>
           </div>
           <div class="quiz-progress">
-            Step <span id="quizStepNum">1</span> of 3
+            <span>Step <span id="current-step">1</span> of 3</span>
           </div>
         </form>
-        <div class="quiz-result" id="quizResult">
+        <div id="scent-quiz-result" class="quiz-result" data-aos="fade-up" style="display:none;">
           <h4>Your Aroma Match</h4>
-          <div class="products-grid" id="quizProducts"></div>
-          <a href="#products" class="cta-main" style="margin-top:2rem; font-size:1em;"><i class="fa-solid fa-shop"></i> Shop All Products</a>
+          <div class="product-grid result-product-grid">
+            <!-- JS-driven recommendations -->
+          </div>
+          <a href="#products" class="btn btn-primary" style="margin-top:2rem;">View All Products</a>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- Separator -->
-  <div class="curve-separator" aria-hidden="true">
-    <svg viewBox="0 0 1440 58"><path d="M0,30c210,38,470,12,700,16c230,4,330,34,740,0v12H0z"></path></svg>
-  </div>
-  <!-- TESTIMONIALS with fade-in animations -->
-  <section id="testimonials" class="testimonials-section">
-    <div class="container">
-      <h2 class="testi-headline">What Our Community Says</h2>
-      <div class="testimonials-grid">
-        <div class="testimonial" tabindex="0">
-          <p>"The Scent's lavender oil transformed my sleep. The calming aroma is my new evening ritual."</p>
-          <span class="testi-author"><i class="fa-solid fa-user"></i> Sarah L. (Los Angeles)</span><br>
-          <span class="testi-stars" aria-label="5 stars">★★★★★</span>
-        </div>
-        <div class="testimonial" tabindex="0">
-          <p>"The Focus Blend has made my home office a space of productivity—refreshing and not overpowering!"</p>
-          <span class="testi-author"><i class="fa-solid fa-user"></i> Michael T. (Chicago)</span><br>
-          <span class="testi-stars" aria-label="5 stars">★★★★★</span>
-        </div>
-        <div class="testimonial" tabindex="0">
-          <p>"The soaps not only smell delightful—they make my skin feel healthy and nourished. Beautifully packaged, too."</p>
-          <span class="testi-author"><i class="fa-solid fa-user"></i> Emma R. (Seattle)</span><br>
-          <span class="testi-stars" aria-label="5 stars">★★★★★</span>
+    </section>
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials-section">
+      <div class="container">
+        <h2 data-aos="fade-up">What Our Community Says</h2>
+        <div class="testimonial-grid">
+          <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+            <p>"The Lavender Essential Oil transformed my bedtime routine—its calming aroma truly helps me unwind."</p>
+            <span class="testimonial-author">- Sarah L., Los Angeles</span>
+            <div class="testimonial-rating">★★★★★</div>
+          </div>
+          <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+            <p>"The Focus Blend oil improved my concentration at home without overwhelming my senses."</p>
+            <span class="testimonial-author">- Michael T., Chicago</span>
+            <div class="testimonial-rating">★★★★★</div>
+          </div>
+          <div class="testimonial-card" data-aos="fade-up" data-aos-delay="300">
+            <p>"Handcrafted soaps that feel divine and truly nourish sensitive skin. A luxurious experience."</p>
+            <span class="testimonial-author">- Emma R., Seattle</span>
+            <div class="testimonial-rating">★★★★★</div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- NEWSLETTER -->
-  <section class="newsletter-section" id="contact">
-    <div class="container">
-      <h2>Join The Scent Community</h2>
-      <p>Subscribe for exclusive offers, well-being tips, and the latest aroma journeys—straight to your inbox.</p>
-      <form class="newsletter-form">
-        <input type="email" required placeholder="Your email address">
-        <button type="submit"><i class="fa-solid fa-envelope"></i> Subscribe</button>
-      </form>
-      <small>By joining, you agree to receive emails from The Scent.</small>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-container">
-      <div class="footer-block">
-        <h4>About</h4>
-        <p>We create premium, globally inspired aromatherapy for modern well-being. Handcrafted. Pure. Restorative.</p>
-        <div class="footer-socials">
-          <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+    </section>
+    <!-- Newsletter Section -->
+    <section id="newsletter" class="newsletter-section">
+      <div class="container newsletter-container">
+        <h2>Join Our Community</h2>
+        <p>Subscribe for exclusive offers, aromatherapy tips, and first access to new products.</p>
+        <form class="newsletter-form">
+          <input type="email" placeholder="Your email address" required>
+          <button type="submit" class="btn btn-primary">Subscribe</button>
+        </form>
+        <p class="newsletter-consent">By subscribing, you agree to our Privacy Policy.</p>
+      </div>
+    </section>
+  </main>
+  <!-- Footer -->
+  <footer id="contact" class="main-footer">
+    <div class="container footer-grid">
+      <div class="footer-about">
+        <h3>About The Scent</h3>
+        <p>Creating premium aromatherapy products to enhance mental and physical well-being through the power of nature.</p>
+        <div class="social-icons">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
           <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
           <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-          <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+          <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest"></i></a>
         </div>
       </div>
-      <div class="footer-block footer-links">
-        <h4>Shop</h4>
+      <div class="footer-links">
+        <h3>Shop</h3>
         <ul>
           <li><a href="#">Essential Oils</a></li>
           <li><a href="#">Natural Soaps</a></li>
           <li><a href="#">Gift Sets</a></li>
           <li><a href="#">New Arrivals</a></li>
+          <li><a href="#">Bestsellers</a></li>
         </ul>
       </div>
-      <div class="footer-block footer-links">
-        <h4>Support</h4>
+      <div class="footer-links">
+        <h3>Help</h3>
         <ul>
           <li><a href="#">Contact Us</a></li>
           <li><a href="#">FAQs</a></li>
           <li><a href="#">Shipping & Returns</a></li>
+          <li><a href="#">Track Your Order</a></li>
+          <li><a href="#">Privacy Policy</a></li>
         </ul>
       </div>
-      <div class="footer-block footer-contact">
-        <h4>Contact</h4>
-        <ul>
-          <li><i class="fa-solid fa-map-marker-alt"></i> 123 Wellness Lane, Aroma City, US</li>
-          <li><i class="fa-solid fa-phone"></i> +1 (555) 123‑4567</li>
-          <li><i class="fa-solid fa-envelope"></i> hello@thescent.com</li>
-        </ul>
+      <div class="footer-contact">
+        <h3>Contact Us</h3>
+        <p><i class="fas fa-map-marker-alt"></i> 123 Aromatherapy Lane, Wellness City, WB 12345</p>
+        <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+        <p><i class="fas fa-envelope"></i> hello@thescent.com</p>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>&copy; 2025 The Scent. All rights reserved.</span>
-      <span class="footer-payments" aria-label="Accepted payment methods">
-        <i class="fab fa-cc-visa"></i> <i class="fab fa-cc-mastercard"></i> <i class="fab fa-cc-paypal"></i>
-      </span>
+      <div class="container">
+        <p>&copy; 2025 The Scent. All rights reserved.</p>
+        <div class="payment-methods">
+          <span>Accepted Payments:</span>
+          <i class="fab fa-cc-visa"></i>
+          <i class="fab fa-cc-mastercard"></i>
+          <i class="fab fa-cc-paypal"></i>
+          <i class="fab fa-cc-amex"></i>
+        </div>
+      </div>
     </div>
   </footer>
-
-  <!-- SCRIPTS -->
+  <!-- Scripts -->
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script>
-    // ------- DARK/LIGHT MODE TOGGLE ------
-    const darkToggle = document.getElementById('darkToggle');
-    darkToggle.addEventListener('click', () => {
-      document.body.classList.toggle('dark');
-      const icon = darkToggle.querySelector('i');
-      if(document.body.classList.contains('dark')){
-        icon.classList.remove('fa-moon'); icon.classList.add('fa-sun');
-      } else {
-        icon.classList.add('fa-moon'); icon.classList.remove('fa-sun');
-      }
-    });
-    // ------ AMBIENT SOUND --------------
-    const scentAudio = document.getElementById('scentAudio');
-    const audioBtn = document.getElementById('audioBtn');
-    let audioOn = false;
-    audioBtn.addEventListener('click', () => {
-      if (scentAudio.paused) {
-        scentAudio.volume = 0.20;
-        scentAudio.play();
-        audioOn = true; audioBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
-      } else {
-        scentAudio.pause();
-        audioOn = false; audioBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
-      }
-    });
-    // Keyboard support
-    audioBtn.addEventListener('keydown', e => {
-      if (e.key === "Enter" || e.key === " ") audioBtn.click();
-    });
-
-    // --------- PARALLAX INGREDIENT IMAGE --------
-    // Only on desktop/pointer devices: simple parallax
-    const parallaxImgDiv = document.getElementById('aboutParallaxImg');
-    if (parallaxImgDiv && window.innerWidth > 600) {
-      let ticking = false;
-      window.addEventListener('scroll', () => {
-        if (!ticking) {
-          window.requestAnimationFrame(() => {
-            const rect = parallaxImgDiv.getBoundingClientRect();
-            const offset = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / window.innerHeight));
-            // Only if visible
-            if(offset > 0.08 && offset < 0.94){
-              parallaxImgDiv.classList.add('scrolled');
-              parallaxImgDiv.querySelector('img').style.transform =
-                `translateY(${offset*18}px) scale(${1+offset*0.06}) rotateZ(${-3+offset*4}deg)`;
-              parallaxImgDiv.querySelector('img').style.filter =
-                `blur(${2.5-1.8*offset}px) saturate(${1+0.12*offset})`;
-            } else {
-              parallaxImgDiv.classList.remove('scrolled');
-              parallaxImgDiv.querySelector('img').style.transform = '';
-              parallaxImgDiv.querySelector('img').style.filter = '';
-            }
-            ticking = false;
-          });
-          ticking = true;
-        }
+    // Mobile Nav
+    const toggleButton = document.querySelector('.mobile-nav-toggle');
+    const mobileNav = document.querySelector('.mobile-nav');
+    const mainHeader = document.querySelector('.main-header');
+    if (toggleButton && mobileNav && mainHeader) {
+      toggleButton.addEventListener('click', () => {
+        mobileNav.classList.toggle('active');
+        mainHeader.classList.toggle('mobile-menu-active');
+        const icon = toggleButton.querySelector('i');
+        icon.classList.toggle('fa-bars');
+        icon.classList.toggle('fa-times');
+      });
+      mobileNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileNav.classList.remove('active');
+          mainHeader.classList.remove('mobile-menu-active');
+          const icon = toggleButton.querySelector('i');
+          icon.classList.add('fa-bars');
+          icon.classList.remove('fa-times');
+        });
       });
     }
+    // Sticky Header on Scroll
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) mainHeader.classList.add('sticky');
+      else mainHeader.classList.remove('sticky');
+    });
 
-    // --------- INTERACTIVE QUIZ ------------
+    // Ambient audio toggle logic
+    const audio = document.getElementById('ambient-audio');
+    const audioBtn = document.getElementById('audio-toggle-btn');
+    audio.volume = 0.18;
+    audioBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        audioBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+      } else {
+        audio.pause();
+        audioBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+      }
+    });
+
+    // Ingredient map point tooltips
+    document.querySelectorAll('.map-point').forEach(point => {
+      point.addEventListener('mouseenter', () => point.querySelector('.map-tooltip').style.opacity = 1);
+      point.addEventListener('mouseleave', () => point.querySelector('.map-tooltip').style.opacity = 0);
+      point.addEventListener('focus', () => point.querySelector('.map-tooltip').style.opacity = 1);
+      point.addEventListener('blur', () => point.querySelector('.map-tooltip').style.opacity = 0);
+    });
+
+    // Scent Quiz
     let quizAnswers = [];
-    const quizForm = document.getElementById('scentQuiz');
-    const quizSteps = document.querySelectorAll('.quiz-step');
-    const quizStepNum = document.getElementById('quizStepNum');
-    const quizResultDiv = document.getElementById('quizResult');
-    const quizProductsDiv = document.getElementById('quizProducts');
-    let curr = 0;
+    const steps = document.querySelectorAll('.quiz-step');
+    let stepIndex = 0;
     function showStep(idx) {
-      quizSteps.forEach((step, i) => step.classList.toggle('active', i===idx));
-      quizStepNum.innerText = idx+1;
-      quizResultDiv.style.display = "none";
-      quizForm.style.display = "";
-      window.scrollTo({top: quizForm.offsetTop-70, behavior: 'smooth'});
+      steps.forEach((step, i) => step.style.display = (i === idx) ? '' : 'none');
+      document.getElementById('current-step').textContent = idx + 1;
     }
     function showResult() {
-      quizForm.style.display = "none";
-      quizResultDiv.style.display = "block";
-      // Very basic mapping, easily expandable
+      document.getElementById('scent-quiz-result').style.display = '';
+      // Mapping answers to recommended products
       const [want, scent, format] = quizAnswers;
       let products = [];
-      if (want==="relax" && scent==="floral") products.push({
-        img:"scent2.jpg", name:"Serenity Blend Oil",desc:"Lavender & Chamomile",icon:"fa-leaf"
-      });
-      if (want==="focus" && (scent==="herbal"||scent==="woody")) products.push({
-        img:"scent4.jpg", name:"Focus Flow Oil",desc:"Rosemary & Mint",icon:"fa-leaf"
-      });
-      if (want==="energize"&&scent==="citrus") products.push({
-        img:"soap4.jpg",name:"Citrus Burst Soap",desc:"Lemon & Orange Peel",icon:"fa-bath"
-      });
-      if (want==="sleep"||scent==="woody") products.push({
-        img:"soap6.jpg", name:"Woodland Retreat Soap",desc:"Cedarwood & Pine",icon:"fa-bath"
-      });
-      if (products.length===0) products = [
-        {img:"scent2.jpg",name:"Serenity Blend Oil",desc:"Lavender & Chamomile",icon:"fa-leaf"},
-        {img:"soap4.jpg",name:"Citrus Burst Soap",desc:"Lemon & Orange Peel",icon:"fa-bath"},
-        {img:"scent4.jpg",name:"Focus Flow Oil",desc:"Rosemary & Mint",icon:"fa-leaf"},
-        {img:"soap6.jpg",name:"Woodland Retreat Soap",desc:"Cedarwood & Pine",icon:"fa-bath"}
-      ];
+      if (want === 'relax' && scent === 'floral') products.push({img:'scent2.jpg',name:'Serenity Blend Oil',desc:'Lavender & Chamomile',link:'#'});
+      else if (want === 'focus' && scent === 'herbal') products.push({img:'scent4.jpg',name:'Focus Flow Oil',desc:'Rosemary & Mint',link:'#'});
+      else if (want === 'energize' && scent === 'citrus') products.push({img:'soap4.jpg',name:'Citrus Burst Soap',desc:'Lemon & Orange Peel',link:'#'});
+      else if (want === 'sleep' && scent === 'woody') products.push({img:'soap6.jpg',name:'Woodland Retreat Soap',desc:'Cedarwood & Pine',link:'#'});
+      else if (scent === 'woody') products.push({img:'soap6.jpg',name:'Woodland Retreat Soap',desc:'Cedarwood & Pine',link:'#'});
+      else if (scent === 'citrus') products.push({img:'soap4.jpg',name:'Citrus Burst Soap',desc:'Lemon & Orange Peel',link:'#'});
+      else if (scent === 'herbal') products.push({img:'scent4.jpg',name:'Focus Flow Oil',desc:'Rosemary & Mint',link:'#'});
+      else products.push({img:'scent2.jpg',name:'Serenity Blend Oil',desc:'Lavender & Chamomile',link:'#'});
       // Filter by format
-      if (format==="oil") products = products.filter(p => p.name.includes('Oil'));
-      if (format==="soap") products = products.filter(p => p.name.includes('Soap'));
-      // If format is both, show all above matches
+      if (format === 'oil') products = products.filter(p=>p.name.includes('Oil'));
+      else if (format === 'soap') products = products.filter(p=>p.name.includes('Soap'));
+      // If format is 'both' or no match, show all matched
       if (products.length === 0) products = [
-        {img:"scent2.jpg",name:"Serenity Blend Oil",desc:"Lavender & Chamomile",icon:"fa-leaf"},
-        {img:"soap4.jpg",name:"Citrus Burst Soap",desc:"Lemon & Orange Peel",icon:"fa-bath"},
-        {img:"scent4.jpg",name:"Focus Flow Oil",desc:"Rosemary & Mint",icon:"fa-leaf"},
-        {img:"soap6.jpg",name:"Woodland Retreat Soap",desc:"Cedarwood & Pine",icon:"fa-bath"}
+        {img:'scent2.jpg',name:'Serenity Blend Oil',desc:'Lavender & Chamomile',link:'#'},
+        {img:'soap4.jpg',name:'Citrus Burst Soap',desc:'Lemon & Orange Peel',link:'#'},
+        {img:'scent4.jpg',name:'Focus Flow Oil',desc:'Rosemary & Mint',link:'#'},
+        {img:'soap6.jpg',name:'Woodland Retreat Soap',desc:'Cedarwood & Pine',link:'#'}
       ];
-      quizProductsDiv.innerHTML = products.map(p =>
-        `<div class="product-card">
-           <img src="https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/${p.img}" alt="${p.name}">
-           <div class="product-info">
-             <h3>${p.name}</h3>
-             <p>${p.desc}</p>
-             <span class="product-link"><i class="fa-solid ${p.icon}"></i> Shop Now</span>
-           </div>
-         </div>`).join('');
+      const grid = document.querySelector('.result-product-grid');
+      grid.innerHTML = products.map(p => `
+        <div class="product-card">
+          <img src="https://raw.githubusercontent.com/nordeim/The-Scent/refs/heads/main/images/${p.img}" alt="${p.name}">
+          <div class="product-info">
+            <h3>${p.name}</h3>
+            <p>${p.desc}</p>
+            <a href="${p.link}" class="product-link">Shop Now</a>
+          </div>
+        </div>
+      `).join('');
     }
-    quizForm.querySelectorAll('.quiz-opt').forEach(btn => {
-      btn.addEventListener('click', () => {
-        quizAnswers[curr] = btn.dataset.value;
-        if(curr < quizSteps.length-1){
-          curr++; showStep(curr);
+    document.querySelectorAll('.quiz-option').forEach(btn => {
+      btn.addEventListener('click', e => {
+        quizAnswers[stepIndex] = btn.dataset.value;
+        if (stepIndex < steps.length - 1) {
+          stepIndex++;
+          showStep(stepIndex);
         } else {
+          document.getElementById('scent-quiz').style.display = 'none';
           showResult();
         }
       });
     });
-    // Initialize quiz on load
-    window.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('DOMContentLoaded', ()=> {
       quizAnswers = [];
-      curr = 0;
-      showStep(0);
-      quizResultDiv.style.display = "none";
-    });
-
-    // ----------- Animated testimonial fade-ins -----
-    function animateTestimonials() {
-      const testimonials = document.querySelectorAll('.testimonial');
-      function checkVis() {
-        testimonials.forEach(t => {
-          const rect = t.getBoundingClientRect();
-          if(window.innerHeight - rect.top > 80){
-            t.classList.add('visible');
-          }
-        });
-      }
-      window.addEventListener('scroll', checkVis, {passive:true});
-      checkVis();
-    }
-    animateTestimonials();
-
-    // INGREDIENT MAP tooltips accessibility
-    document.querySelectorAll('.ingredient-marker').forEach(marker=>{
-      marker.addEventListener('focus', ()=>marker.querySelector('.marker-label').style.opacity=1);
-      marker.addEventListener('blur', ()=>marker.querySelector('.marker-label').style.opacity=0);
-      marker.addEventListener('mouseenter', ()=>marker.querySelector('.marker-label').style.opacity=1);
-      marker.addEventListener('mouseleave', ()=>marker.querySelector('.marker-label').style.opacity=0);
-    });
-
-    // Newsletter submit (demo action)
-    document.querySelector('.newsletter-form').addEventListener('submit', e => {
-      e.preventDefault(); alert("Thank you for subscribing!");
-      e.target.reset();
+      stepIndex = 0;
+      showStep(stepIndex);
+      document.getElementById('scent-quiz').style.display = '';
+      document.getElementById('scent-quiz-result').style.display = 'none';
+      AOS.init({ once: true, duration: 1000 });
     });
   </script>
 </body>
 </html>
 ```
-<think>
-This landing page leverages all required immersive techniques: a dramatic animated mist overlay, seamless dark/light mode with calm and aromatic color shifts, a fully interactive scent quiz, animated ingredient map with country markers, scroll-triggered fade-in testimonials, and a floating shop CTA with a gentle pulse. Font Awesome is deeply integrated for story and affordance. Ambient sound is present, but always opt-in for user accessibility.
 
-The CSS and JS are carefully structured for accessibility and performance; color contrast and focus states are observed, and prefers-reduced-motion disables most eye-catching animation for those who need it. All image links and icons are verified; product cards and quiz transitions tested for smoothness.
+```style.css
+:root {
+  --font-heading: 'Cormorant Garamond', serif;
+  --font-body: 'Montserrat', sans-serif;
+  --font-accent: 'Raleway', sans-serif;
+  --color-primary: #1A4D5A;
+  --color-secondary: #A0C1B1;
+  --color-accent: #D4A76A;
+  --color-background: #F8F5F2;
+  --color-text: #333;
+  --color-text-light: #FFF;
+  --color-border: #e0e0e0;
+  --container-width: 1200px;
+  --spacing-unit: 1rem;
+  --transition-speed: 0.3s;
+}
+*,*::before,*::after {box-sizing:border-box; margin:0; padding:0;}
+html { scroll-behavior:smooth; font-size:100%; }
+body {
+  font-family: var(--font-body);
+  background: var(--color-background);
+  color: var(--color-text);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
 
-This approach delivers both a "Wow" first impression and a sustained feeling of depth, authenticity, and wellness immersion—perfect for your brand.  
+h1,h2,h3,h4,h5,h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: calc(var(--spacing-unit) * 1);
+  line-height: 1.2;
+}
+h1 { font-size: clamp(2.5rem, 5vw, 4rem);}
+h2 { font-size: clamp(1.8rem, 4vw, 2.8rem);}
+h3 { font-size: clamp(1.3rem, 3vw, 1.7rem);}
+p { margin-bottom: calc(var(--spacing-unit) * 1); max-width: 70ch; }
+a { color: var(--color-primary); text-decoration: none; transition: color var(--transition-speed) ease;}
+a:hover, a:focus { color: var(--color-accent); }
+img { max-width: 100%; display: block; }
+ul { list-style: none; }
+
+/* Container */
+.container {
+  width: 90%;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-unit);
+}
+
+/* --- Scent Mist Overlay --- */
+.scent-mist-overlay {
+  pointer-events: none;
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100vh;
+  z-index: 2;
+}
+.scent-mist-overlay .mist1 {
+  stroke-linecap:round;
+  animation: moveMist1 18s linear infinite alternate;
+}
+.scent-mist-overlay .mist2 {
+  stroke-linecap:round;
+  animation: moveMist2 26s linear infinite alternate;
+}
+@keyframes moveMist1 {
+  0% { transform: translateX(0); opacity:1;}
+  100% { transform: translateX(60px) scaleX(1.08); opacity:0.88;}
+}
+@keyframes moveMist2 {
+  0% { transform: translateX(-30px) scaleX(1); opacity:1;}
+  100% { transform: translateX(20px) scaleX(0.98); opacity:0.9;}
+}
+/* --- Ambient Audio Toggle --- */
+.ambient-audio-toggle {
+  position: fixed; top: 1.5rem; right: 2rem; z-index: 1100;
+}
+.ambient-audio-toggle button {
+  background: rgba(255,255,255,0.55);
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  padding: 0.7rem 0.8rem;
+  font-size: 1.7rem;
+  color: var(--color-primary);
+  cursor: pointer;
+  transition: background 0.3s, color 0.2s;
+}
+.ambient-audio-toggle button:focus { outline: 2px solid var(--color-accent); }
+.ambient-audio-toggle button:hover { background: rgba(160,193,177,0.3);}
+
+/* --- Header --- */
+.main-header {
+  position: absolute;
+  top: 0; left: 0; width: 100%;
+  z-index: 1000;
+  padding: calc(var(--spacing-unit) * 1.5) 0;
+  background: transparent;
+  transition: background-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease, padding var(--transition-speed) ease;
+}
+.main-header.sticky {
+  position: fixed;
+  background: rgba(255,255,255,0.95);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  padding: calc(var(--spacing-unit) * 0.8) 0;
+}
+.main-header.sticky .logo a,
+.main-header.sticky .logo span,
+.main-header.sticky .main-nav a,
+.main-header.sticky .header-icons a {
+  color: var(--color-primary);
+}
+/* ...Rest header as in your prior CSS... */
+.header-container { display: flex; justify-content: space-between; align-items: center; }
+.logo a {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-text-light);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.logo span {
+  display: block;
+  font-family: var(--font-accent);
+  font-size: 0.6rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--color-text-light);
+  margin-top: -5px;
+  opacity: 0.8;
+}
+
+/* ...Nav styles unchanged... */
+.main-nav ul { display: flex; gap: calc(var(--spacing-unit) * 2); }
+.main-nav a {
+  font-family: var(--font-accent);
+  font-weight: 500;
+  color: var(--color-text-light);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 5px 0; position: relative;
+}
+.main-nav a::after {
+  content: '';
+  position: absolute;
+  width: 0; height: 2px;
+  bottom: 0; left: 50%;
+  background: var(--color-accent);
+  transition: width var(--transition-speed) ease; transform: translateX(-50%);
+}
+.main-nav a:hover::after, .main-nav a:focus::after { width: 100%; }
+.header-icons { display: flex; gap: calc(var(--spacing-unit) * 1.5);}
+.header-icons a { color: var(--color-text-light); font-size: 1.2rem;}
+.mobile-nav-toggle {
+  display: none; background: none; border:none;
+  color: var(--color-text-light); font-size:1.5rem; cursor:pointer; z-index: 1001;
+}
+.mobile-nav { display: none; position:absolute; top:100%; left:0; width:100%; background:rgba(255,255,255,0.98); box-shadow:0 5px 15px rgba(0,0,0,0.1); padding: var(--spacing-unit); max-height: 0; overflow:hidden; transition: max-height 0.5s;}
+.mobile-nav.active { display: block; max-height:500px;}
+.main-header.mobile-menu-active { background:rgba(255,255,255,0.98);}
+.mobile-nav ul { display: flex; flex-direction: column; gap: var(--spacing-unit);}
+.mobile-nav a {
+  display: block; padding: calc(var(--spacing-unit)*0.5);
+  color: var(--color-primary);
+  font-family: var(--font-accent); text-transform: uppercase;
+  text-align: center; font-size: 1.1rem;
+  transition: background var(--transition-speed) ease;
+}
+.mobile-nav a:hover, .mobile-nav a:focus {
+  background: var(--color-secondary); color: var(--color-primary);
+}
+
+/* --- Hero Section --- */
+.hero-section {
+  position: relative;
+  height: 100vh;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  color: var(--color-text-light);
+}
+.hero-media {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%; overflow: hidden;
+  z-index: 0;
+}
+.hero-media video,
+.hero-media img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  animation: zoomInOut 24s infinite alternate ease-in-out;
+}
+@keyframes zoomInOut {
+  from { transform: scale(1);}
+  to { transform: scale(1.06);}
+}
+.hero-section::before {
+  content: '';
+  position: absolute; top:0; left:0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.38);
+  z-index: 1;
+}
+/* Layering: video (z:0), ::before (z:1), mist overlay (z:2), content (z:10) */
+.hero-content {
+  position: relative;
+  z-index: 10;
+  max-width: 800px;
+  margin: 0 auto;
+  animation: fadeIn 1.5s;
+}
+@keyframes fadeIn {
+  from { opacity:0; transform:translateY(20px);}
+  to { opacity:1; transform:translateY(0);}
+}
+.hero-content h1 { color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.7); margin-bottom:calc(var(--spacing-unit)*1);}
+.hero-content p { font-size: 1.21rem; margin-bottom:calc(var(--spacing-unit)*2); color: #f8f8f8;}
+.btn {
+  display:inline-block;
+  font-family: var(--font-accent);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: calc(var(--spacing-unit) * 0.8) calc(var(--spacing-unit) * 2);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background var(--transition-speed) ease, box-shadow var(--transition-speed), transform var(--transition-speed);
+  border: 2px solid transparent;
+  font-size: 1rem;
+}
+.btn-primary {
+  background: var(--color-primary); color: var(--color-text-light); border-color: var(--color-primary);
+}
+.btn-primary:hover,.btn-primary:focus {
+  background: var(--color-accent); border-color: var(--color-accent); color: var(--color-primary); transform: translateY(-2px); box-shadow:0 4px 12px rgba(212,167,106,0.13);
+}
+.btn-secondary {
+  background: transparent; color: var(--color-primary); border-color: var(--color-primary);
+}
+.btn-secondary:hover,.btn-secondary:focus {
+  background: var(--color-primary); color: var(--color-text-light); transform: translateY(-2px);
+}
+/* --- Section general --- */
+section { padding: calc(var(--spacing-unit) * 5) 0;}
+section:nth-child(odd) { background: #FFF;}
+section h2 { text-align:center; margin-bottom: calc(var(--spacing-unit) * 3);}
+@media (max-width:592px){
+  .hero-section { min-height:500px;}
+  .scent-mist-overlay { height: 400px;}
+}
+
+/* --- About Section and Ingredient Map --- */
+.about-section { background: #fff;}
+.about-container { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--spacing-unit)*4); align-items:center;}
+.about-image img { border-radius: 9px; box-shadow:0 10px 20px rgba(26,77,90,0.07); transition: transform var(--transition-speed); }
+.about-image img:hover { transform:scale(1.03);}
+.about-text h2 { text-align:left;}
+.about-text p { margin-bottom: calc(var(--spacing-unit)*2);}
+.ingredient-map-container { margin: 4rem auto 2.4rem auto; max-width:700px; text-align:center;}
+.ingredient-map-container h3{color:var(--color-primary);margin-bottom:1.1rem;}
+.ingredient-map { position: relative; width: 100%; max-width: 520px; margin:1.3rem auto;}
+.ingredient-map img {
+  width: 100%; border-radius: 8px; box-shadow: 0 6px 18px rgba(26,77,90,0.07);
+}
+.map-point {
+  position: absolute; width:28px; height:28px;
+  left:0; top:0; transform:translate(-50%,-50%); cursor: pointer; z-index:10;
+}
+.map-point .point-pulse {
+  width:14px; height:14px; border-radius:50%; background:var(--color-accent);
+  box-shadow: 0 0 8px 2px var(--color-accent);
+  animation: pulsePoint 1.2s infinite alternate;
+  margin:auto;
+}
+@keyframes pulsePoint {
+  from { box-shadow: 0 0 8px 1px var(--color-accent);}
+  to { box-shadow: 0 0 16px 7px rgba(212,167,106,0.27);}
+}
+.map-point .map-tooltip {
+  pointer-events:none; white-space:nowrap; position:absolute;
+  left:1.9rem; top:45%; transform:translateY(-50%);
+  background:rgba(34,43,46,0.97); color:#fff;
+  padding: 5px 13px; font-size:0.97rem; border-radius:5px;
+  opacity: 0; transition: opacity 0.24s; min-width:110px;
+  font-family: var(--font-accent);
+}
+
+/* --- Product Cards --- */
+.product-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(278px,1fr)); gap:calc(var(--spacing-unit)*2.5);}
+.product-card {
+  background: #fff;
+  border-radius:8px;
+  overflow: hidden;
+  box-shadow:0 4px 15px rgba(0,0,0,0.05);
+  transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+.product-card:hover { transform: translateY(-7px) scale(1.03); box-shadow:0 11px 30px rgba(26,77,90,0.08);}
+.product-card img { height:250px; object-fit: cover; transition: opacity var(--transition-speed);}
+.product-card:hover img { opacity:0.89;}
+.product-info { padding: calc(var(--spacing-unit)*1.5); text-align:center;}
+.product-info h3 { margin-bottom: calc(var(--spacing-unit)*0.5); font-size:1.24rem;}
+.product-info p { font-size: .96rem; color: #666; margin-bottom:calc(var(--spacing-unit)*1);}
+.product-link {
+  font-family: var(--font-accent); font-weight:500;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  font-size: 0.9rem; letter-spacing:0.5px;
+  position: relative;
+  padding-bottom:3px;
+}
+.product-link::after {
+  content: ''; position:absolute; width:0; height:1.3px; bottom:0; left:50%; transform:translateX(-50%);
+  background: var(--color-accent);
+  transition: width var(--transition-speed);
+}
+.product-card:hover .product-link::after { width:72%;}
+.view-all-cta { text-align:center; margin-top:calc(var(--spacing-unit)*3); }
+
+/* --- Finder Section / Interactive Quiz --- */
+.finder-section { background: var(--color-secondary); color: var(--color-primary);}
+.finder-section h2 { color: var(--color-primary); }
+.scent-quiz { margin-top:1.5rem;}
+.quiz-step {margin-top:2.2rem;}
+.quiz-step h3{font-size:1.15rem;}
+.quiz-options {
+  display: flex; flex-wrap: wrap; justify-content: center; gap:1.3rem 2.1rem; margin:2.2rem 0;
+}
+.quiz-option {
+  font-family: var(--font-accent); font-size:1.08rem;
+  background: var(--color-background); color: var(--color-primary);
+  border: none; border-radius: 40px; padding:1.13rem 2.2rem;
+  cursor:pointer; transition: background 0.18s, box-shadow 0.2s, transform 0.13s;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  display: flex; align-items:center; gap:0.7em; font-weight: 500;
+}
+.quiz-option:focus, .quiz-option:hover {
+  background: var(--color-primary); color: #fff; outline: none;
+  box-shadow:0 5px 16px rgba(26,77,90,0.14);
+  transform: scale(1.027)
+}
+.quiz-option i {font-size:1.3em;}
+.quiz-progress {margin:1.7rem 0 0 0; text-align:center; color:var(--color-primary); opacity:0.72; font-family:var(--font-accent);}
+.quiz-result {margin-top:3rem; text-align:center;}
+.quiz-result h4 {margin-bottom:1.4rem;}
+.result-product-grid {justify-content: center; margin-top:1.2rem;}
+.result-product-grid { display: flex; flex-wrap: wrap; gap:2rem; justify-content: center;}
+@media (max-width:650px) { .result-product-grid { flex-direction:column; align-items:center;}}
+/* --- Testimonials --- */
+.testimonials-section { background:#fff;}
+.testimonial-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap:calc(var(--spacing-unit)*2);}
+.testimonial-card {
+  background: var(--color-background); padding:calc(var(--spacing-unit)*2);
+  border-radius:8px; border-left: 5px solid var(--color-secondary);
+  box-shadow:0 4px 10px rgba(0,0,0,0.03);
+}
+.testimonial-card p { font-style:italic; color:#515;}
+.testimonial-author { font-weight:500; color: var(--color-primary); margin-bottom:calc(var(--spacing-unit)*0.5);}
+.testimonial-rating { color: var(--color-accent); font-size:1.14rem;}
+
+/* --- Newsletter Section --- */
+.newsletter-section {
+  background: var(--color-primary); color: var(--color-text-light);
+  padding:calc(var(--spacing-unit)*4) 0;
+}
+.newsletter-section h2 { color: var(--color-text-light);}
+.newsletter-container { text-align:center; max-width:700px;}
+.newsletter-container p { opacity:0.93; margin-bottom:calc(var(--spacing-unit)*1.5);}
+.newsletter-form { display:flex; justify-content:center; gap:var(--spacing-unit); margin-bottom:var(--spacing-unit); flex-wrap:wrap;}
+.newsletter-form input[type="email"] {
+  padding: calc(var(--spacing-unit)*0.8);
+  border:1px solid var(--color-secondary);
+  border-radius: 50px;
+  font-family: var(--font-body); font-size:1rem;
+  min-width: 260px; flex-grow:1; outline:none;
+}
+.newsletter-form .btn {
+  background: var(--color-accent); color: var(--color-primary); border-color: var(--color-accent);
+}
+.newsletter-form .btn:hover {
+  background: var(--color-secondary); color: var(--color-primary); border-color: var(--color-secondary);
+}
+.newsletter-consent {font-size:.9rem; opacity:0.8;}
+
+/* --- Footer --- */
+.main-footer {
+  background: #2f3d41; color: #ccc; padding-top: calc(var(--spacing-unit) * 4); font-size:.91rem;
+}
+.footer-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap: calc(var(--spacing-unit)*3); margin-bottom:calc(var(--spacing-unit)*3);}
+.footer-about h3, .footer-links h3, .footer-contact h3 {
+  font-family: var(--font-accent); color: var(--color-text-light); font-weight:600; margin-bottom:calc(var(--spacing-unit)*1.2); font-size:1.1rem;}
+.social-icons { display:flex; gap:var(--spacing-unit);}
+.social-icons a { color:#ccc; font-size:1.22rem; transition: color var(--transition-speed), transform var(--transition-speed);}
+.social-icons a:hover { color: var(--color-accent); transform:scale(1.1);}
+.footer-links ul li {margin-bottom:calc(var(--spacing-unit) * 0.5);}
+.footer-links a {color:#ccc;}
+.footer-links a:hover { color: var(--color-text-light); text-decoration: underline;}
+.footer-contact p {margin-bottom:calc(var(--spacing-unit) * 0.6); display:flex; align-items:center; gap:calc(var(--spacing-unit)*0.5);}
+.footer-contact i {color:var(--color-secondary); width:16px;}
+.footer-bottom {background:#222b2e; padding:calc(var(--spacing-unit)*1.5) 0; margin-top:calc(var(--spacing-unit)*2);}
+.footer-bottom .container {
+  display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:var(--spacing-unit); font-size:.98rem;
+}
+.payment-methods { display:flex; align-items:center; gap:calc(var(--spacing-unit)*0.8);}
+.payment-methods span { margin-right:calc(var(--spacing-unit)*0.5);}
+.payment-methods i { font-size:1.7rem; color:#aaa;}
+
+/* --- Responsive --- */
+@media (max-width:992px) {
+  .header-container {padding:0 calc(var(--spacing-unit)*1.5);}
+  .main-nav, .header-icons { display:none;}
+  .mobile-nav-toggle { display:block;}
+  .about-container { grid-template-columns:1fr; text-align:center;}
+  .about-image {margin-bottom:calc(var(--spacing-unit)*2); order:-1;}
+  .footer-grid { grid-template-columns:repeat(auto-fit,minmax(250px,1fr));}
+}
+@media (max-width:576px) {
+  h1 { font-size:2rem;}
+  h2 { font-size:1.6rem;}
+  h3 { font-size:1.16rem;}
+  .hero-section { min-height:420px;}
+  .hero-content p { font-size:.98rem;}
+  .btn { padding: calc(var(--spacing-unit) * 0.7) calc(var(--spacing-unit) * 1.5); font-size:.95rem;}
+  section { padding:calc(var(--spacing-unit)*3) 0;}
+  section h2 {margin-bottom:calc(var(--spacing-unit)*2);}
+  .product-grid { grid-template-columns:1fr; gap:calc(var(--spacing-unit)*1.5);}
+  .finder-grid { grid-template-columns: repeat(auto-fit,minmax(140px,1fr)); gap:var(--spacing-unit);}
+  .quiz-option { font-size: .98rem; padding:.8em 1.2em;}
+  .testimonial-grid { grid-template-columns:1fr;}
+  .newsletter-form {flex-direction:column; align-items:stretch;}
+  .newsletter-form input[type="email"] {width:100%;}
+  .newsletter-form .btn {width:100%;}
+  .footer-grid { grid-template-columns:1fr; text-align:center;}
+  .social-icons { justify-content:center; margin-top:var(--spacing-unit);}
+  .footer-bottom .container { flex-direction:column; text-align:center;}
+  .payment-methods {margin-top:var(--spacing-unit);}
+}
+```
+
+## 1. Analysis of Existing Landing Page
+**Current Strengths:**
+- Sophisticated color scheme and modern typography with blended serif/sans fonts.
+- Hero section with video background for visual interest and atmosphere.
+- Sectioned structure: About, Products, "Scent Finder" (interactive concept), Testimonials, Newsletter, and comprehensive Footer.
+- Responsive design, clear CTAs, engaging imagery.
+
+**Current Weaknesses / Missed Opportunities:**
+- The landing page is attractive and clean, but it doesn't achieve maximum "Wow Effect" nor does it fully immerse the visitor into a *scented* world.
+- The "Scent Finder" is static, only cards without true interactivity, animation, or personalization.
+- Hero video is a nice touch, but the fallback is a single image—could show more diversity or include parallax for depth.
+- No micro-interactions, scent or wellness symbolism, or ambient effects that could tie to the brand mission (multisensory design, even visually suggested).
+- Lacks storytelling moments (no ingredient origins, craft process highlights, or user "journeys").
+- No "customization" hook beyond the quiz CTA, and the quiz is not embedded, just a button.
+- Not enough focus on the international, artisanal aspect ("imported from all over the world, exported back after unique formulation").
+- Lacks advanced features: e.g., ambient background effects, specialty section transitions, ingredient parallax, soft-motion, scroll-triggered fades.
+
+## 2. Options for Improving the "Wow Effect"
+**A. Visual/Atmospheric Enhancements**
+1. **Animated “Scent Trails”:** Subtle, animated SVG mist, smoke, or scent trails that float across hero/products/background, evoking aroma visually.
+2. **Parallax Layers:** Parallax scrolling on hero and "About" sections using ingredient images (flowers, herbs, oils, etc.)
+3. **Micro-Animations:** Hover effects (e.g., “sniff” icon animates, soap lathers), card reveals, testimonial fade-ins.
+4. **Soothing, Subtle Ambient Sound** (optional with mute): forest, water trickle, gentle chimes for synergy with brand.
+5. **"Hand-crafted" Visuals:** Watercolor marks, rough-edged photo frames, sketches of plants/oils for authenticity.
+
+**B. Immersion/Storytelling**
+1. **Interactive Scent Quiz Inline:** Instead of a CTA, embed a simple interactive multi-step quiz.
+2. **Global Ingredient Map:** Scrollable or hoverable world map showing origin of select ingredients.
+3. **“A Day With Our Scents”** immersive journey: a horizontal scroll or scroll-triggered narrative about the role of scents across a relaxing, energized, focused, etc., day.
+4. **Real Customer Stories:** Short story format with portrait, aroma selection, and impact.
+
+**C. Technical/UX Enhancements**
+1. **Animated, Floating Call-to-Action Button** on hero with soft pulsing or ‘diffusing’ background glow.
+2. **Section Transitions:** Gradient wipes/organic shape transitions between sections (CSS clip-path, SVG)
+3. **Floating “Shop Now” Card:** Sticky after hero, always accessible.
+4. **Dark/Light Mode toggle with aroma-based color scheme shifts.**
